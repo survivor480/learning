@@ -1,0 +1,209 @@
+Information Gathering Tools with Description
+
+ace-voip - ACE(Automated Corporate Enumerator) is a powerful tool that mimics the behavior of IP phones 
+           to download the name and extension entries. It is developed to automate VoIP attacks that can 
+           be targeted against names in an enterprise directory.
+
+Amap - It is a tool that identifies applications even if they are running on a different port and also 
+       identifies non-ASCII based applications.
+
+APT2 - It is the acronym for "Automated Penetration Testing". It is a tool that performs an NMap or 
+       imports the results of a scan from Nexpose, Nessus, or NMap.
+
+arp-scan - It is also called as ARP sweep or MAC Scanner. It is a very fast ARP packet scanner that 
+           shows every active IPv4 device on your Subnet even if they have firewalls. ARP is 
+           non-routable, so it only works on the Local LAN.
+
+Automater - It is a URL or Domain, IP Address, and Md5 Hash OSINT analysis tool that eases the 
+            analysis process for intrusion Analyst.
+
+bing-ip2hosts -  It enumerates hostnames for an IP using bing.com. It comes with a feature 
+                 to search for websites hosted on a specific IP address.
+
+braa - It is a mass SNMP scanner able to query dozens or hundreds of hosts simultaneously 
+        and in a single process. It is very fast as it consumes few system resources.
+
+CaseFile - CaseFile is a limited form of Maltego. It has the same graphic application as 
+            Maltego but not has the ability to run the transformation.
+
+
+CDPSnarf - It is a network sniffing tool exclusively written to extract information from CDP (Cisco 
+            Discovery Protocol) packets. It also provides the information a "show cdp neighbors detail" 
+            command would return on a Cisco router.
+
+cisco-torch - It is a Cisco device scanner that extensively uses forking to launch multiple scanning 
+                processes on the background for maximum scanning efficiency.
+
+copy-router-config - It copies configuration files from Cisco devices running SNMP (Simple Network Management 
+                     Protocol).
+
+Dmitry - It stands for Deepmagic Information Gathering Tool. It is a UNIX/ (GNU) Linux Command Line Application 
+          coded in C language. It is able to gather as many details as possible about a host.
+
+Dnmap - It is a framework to distribute nmap scans among n number of clients. It always reads an already 
+        created file with nmap commands and sends those commands to each client connected to it.
+
+Dnsmap - It is used by pen-testers during the information gathering/enumeration phase of infrastructure 
+          security assessments to find the target company's IP netblocks, domain names, phone numbers, etc...
+
+DNSRecon -  It is a powerful DNS enumeration script that provides the ability to perform- check all NS 
+            records for zone transfer, General DNS Record and SRV Record Enumeration, checks Wildcard 
+            Resolution, PTR record lookup, etc.
+
+Dnstracer - It traces DNS queries to the source and determines whether a given Domain Name Server gets 
+            its information from a given hostname.
+
+Dnswalk - It is a DNS debugger that performs zone transfers of specified domains and checks the database 
+          in many ways for internal consistency and accuracy.
+
+DotDotPwn - It is a fuzzer to discover traversal directory vulnerabilities in software such as 
+            HTTP/FTP/TFTP servers and Web platforms such as CMSs, ERPs, Blogs, etc.
+
+Enum4Linux - It is a tool to enumerate information from Windows and Samba systems.
+
+enumIAX - It is an Inter Asterisk Exchange protocol username brute-force enumerator. It operates in 
+          two distinct modes- Sequential Username Guessing and Dictionary Attack.
+
+EyeWitness - It is a tool to take screenshots of websites, RDP (Remote Desktop) services, and open 
+            VNC (Virtual Network Computing) servers. It also provides some server header info and 
+            identifies default credentials if possible.
+
+Faraday - It introduces IPE (Integrated Penetration-Test Environment), which is a multiuser Penetration 
+        test IDE that is designed for distribution, indexing and analysis of the data generated during 
+        a security audit. The main purpose if this tool is to re-use the available tools.
+
+Fierce - It is a survey tool that is used to locate likely targets both inside and outside a corporate network.
+
+Firewalk - It is a network security survey tool that is used to determine what will be passed by the layer 
+            4 protocol (a given IP forwarding device). It works by sending out TCP or UDP packets with a 
+            TTL one greater than the targeted gateway.
+
+fragroute - It provides a simple rule set language to delay, duplicate, drop, fragment, overlap, print, reorder, 
+            segment, source-route, or otherwise hop with all outbound packets destined for a target host with 
+            minimal support for random behaviour. 
+
+fragrouter - It is a network intrusion detection toolkit. It is a one-way fragmenting router, i.e. 
+            IP packets get sent from the attackers to the fragrouter, which changes them into a 
+            fragmented data stream to forward to the victim.
+
+Ghost Phisher - It is a GUI suit for phishing and penetration attacks. Or a wireless and Ethernet 
+                security auditing and attack software program to emulate and deploy access points. 
+
+GoLismero -  It is an open source framework for security testing. It is currently used for web security 
+             but can be easily expanded to other kinds of the scan.
+
+goofile - This tool is used to search a specific file type in a given domain.
+
+hping3 - It is an Active Network Smashing Tool used as a security tool to perform Firewall testing, 
+        advance port scanning, network testing, manual path MTU discovery, remote OS fingerprinting, 
+        TCP/IP stacks auditing, etc....
+
+ident-user-enum - It is used to determine the owner of the TCP network process listening on each TCP 
+                  port of a target system. It can help to prioritise target service during a pen-test.
+
+InSpy - It is a LinkedIn enumeration tool with two functionalities i.e., TechSpy and EmpSpy. 
+        TechSpy takes LinkedIn job listings for technologies used by the target company. InSpy is used 
+        to identify technologies by matching job descriptions to the keyword from a newline-delimited file.
+
+InTrace - It enables users to enumerate IP hops, which are exploiting existing TCP connections from the 
+            local network as well as from remote hosts. It can be used for network survey and firewall 
+            bypassing.
+
+iSMTP - It tests for the SMTP user enumeration (RCPT TO and VRFY), internal spoofing, and relay.
+
+Ibd - It stands for Load Balancing Detector. It is used if a given domain uses DNS or HTTP Load-Balancing.
+
+Maltego Teeth - It can be used for the information gathering phase of all security related work. 
+                It helps you in your thinking process by visually demonstrating interconnected links 
+                between searched items. It gives you access to hidden information.
+
+Masscan - It is the fastest internet port scanner that scans the entire internet under 6 minutes, 
+          transmitting 10 million packets per second.
+
+Metagoofil - It is an information gathering tool designed for extracting metadata of a public document 
+            that belongs to a target company. 
+
+Miranda - It is a Plug-N-Play client application designed to discover, query, and interact with UPNP 
+          devices, Internet Gateway Devices. 
+
+nbtscan-unixwiz - It is a command-line tool that scans for open NETBIOS name servers on a local or 
+                    remote TCP/IP network. 
+
+Nikto - It is an open source web server scanner used to run the comprehensive test against web servers 
+        for multiple items that includes huge number of potentially dangerous files, run checks for 
+        outdated version over thousands of servers and also version specific problems
+
+Nmap - This utility is used for network discovery and security auditing. It uses raw IP packets in 
+        simple ways to determine what hosts are available on the network.
+
+ntop - It shows the network uses and can be used in both interactive or web mode. It uses libcap, 
+        a system-independent interface for user-level packet capture.
+
+OSRFramework - It is a set of libraries that checks for a user profile in up to 290 different 
+                platforms. It provides a way of making these queries graphically.
+
+p0f - This tool utilizes an array of sophisticated, purely passive traffic fingerprinting mechanisms 
+      to identify the processes behind any TCP/IP communication without interfering in any way.
+
+Parsero - It is used to read the Robots.txt files of a web server and look at the banned entries. These 
+          entries tell the search engines what directories or files hosted on a web server mustn't be indexed.
+
+Recon-ng - It is a fully loaded web survey framework in which open-source web-based reconnaissance can be 
+            conducted quickly and thoroughly.
+
+SET - SET stands for Social Engineer Toolkit. It is an open-source penetration testing framework that is 
+      designed for Social-Engineering. It contains a number of custom attack vectors that allow you 
+      to make a believable attack in a fraction of the time.
+
+SMBMap -  It allows the user to enumerate samba share drives across an entire domain. It contains the 
+          list of share drives, drives permissions, shares contents, upload/download functionality, etc.? 
+          It is designed to simplify searching for potentially sensitive data across large networks.
+
+smtp-user-enum - It is a username guessing tool primarily for the SMTP service. It is used to enumerate 
+                 OS level user accounts on Solaris via the SMTP (Simple Mail Transfer Protocol) service.
+
+snmp-check - It allows you to enumerate the SNMP devices and places the output in a readable format. 
+             It is useful for penetration testing or system monitoring.
+
+SPARTA - It is a network infrastructure penetration testing tool that aids the penetration tester 
+        in the scanning and enumeration phase. It eases access to the toolkits and displays output 
+        in a convenient way.
+
+sslcaudit -  It can be used against the MIMT attacks and useful for testing thick clients and anything 
+             communicating over SSL/TLS over TCP.
+
+SSLsplit - It is a tool for man-in-the-middle-attack against SSL/TLS encrypted network connections. 
+            It is very useful for network forensics and penetration testing.
+
+sslstrip - It is used to transparently hijack HTTP traffic on a network, watch for HTTPS links and 
+            redirects to it. It maps those links into similar HTTP links or homographs.
+
+SSLyze -  It analyses the SSL configuration of a server by connecting to it. It is very fast and 
+          comprehensive, and help the tester to identify mis-configuration that are affecting their 
+          SSL servers.
+
+Sublist3r - It is a fast subdomain enumeration tool for penetration testers. It iterates subdomains 
+            using many search engines such as Google Yahoo, Bing, and Ask, etc
+
+THC-IPV6 - It is a tool to attack the inherited weakness of IPV6 and ICMP6 protocol. It converts a 
+            MAC or IPv4 address to an IPv6 address.
+
+theharvester - It is used to gather e-mail accounts and subdomain names from public sources.
+
+TLSSLed -  	It is used to evaluate the security of a target SSL/TLS (HTTPS) web servers' implementation.
+
+twofi - It stands for Twitter Words of Interest. It will take multiple search terms and return a 
+        word list sorted by most common first.
+
+Unicornscan - It is an information gathering and correlation engine that is scalable, accurate, flexible, 
+                and efficient. It measures the response from a TCP/IP enabled device or network.
+
+URLCrazy - It is a Domain typo generator that detects and performs typo squatting, URL hijacking, phishing, 
+            and corporate espionage.
+
+Wireshark - It is a network protocol/traffic analyser. It allows us to monitor our network at a microscopic level.
+
+WOL-E - A complete suite of tools for the Wake on LAN feature of network attached computers.
+
+Xplico - It is a Network Forensic Analysis Tool (NFAT), which is used to extract the application data from 
+        internet traffic.

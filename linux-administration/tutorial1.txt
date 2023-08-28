@@ -1,0 +1,527 @@
+Openwrt linux distribution is the one that is used inside of routers.
+
+distrowatch.com is the website where we can get to know the popularity of each distribution.
+
+Red Hat Enterprise Linux and Ubuntu is something to be focussed for corporates
+
+df command displays the file information in the disk space usage
+
+df -hi -all
+
+Show information about the file system on which each FILE resides,
+or all file systems by default
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all             include pseudo, duplicate, inaccessible file systems
+  -B, --block-size=SIZE  scale sizes by SIZE before printing them; e.g.,
+                           '-BM' prints sizes in units of 1,048,576 bytes;
+                           see SIZE format below
+  -h, --human-readable  print sizes in powers of 1024 (e.g., 1023M)
+  -H, --si              print sizes in powers of 1000 (e.g., 1.1G)
+  -i, --inodes          list inode information instead of block usage
+  -k                    like --block-size=1K
+  -l, --local           limit listing to local file systems
+      --no-sync         do not invoke sync before getting usage info (default)
+      --output[=FIELD_LIST]  use the output format defined by FIELD_LIST,
+                               or print all fields if FIELD_LIST is omitted.
+  -P, --portability     use the POSIX output format
+      --sync            invoke sync before getting usage info
+      --total           elide all entries insignificant to available space,
+                          and produce a grand total
+  -t, --type=TYPE       limit listing to file systems of type TYPE
+  -T, --print-type      print file system type
+  -x, --exclude-type=TYPE   limit listing to file systems not of type TYPE
+  -v                    (ignored)
+      --help        display this help and exit
+      --version     output version information and exit
+
+man ls
+
+This command actually opens the manual page of the ls command
+In the manual page typing h will open the help page as well
+
+
+# checking if a command is shell built-in or executable file
+type rm        # => rm is /usr/bin/rm
+type cd        # => cd is a shell builtin
+
+
+# searching for a command, feature or keyword in all man Pages
+man -k uname
+man -k "copy files"
+apropos passwd
+
+
+# getting help for shell built-in commands
+help command    # => Ex: help cd
+command --help  # => Ex: rm --help
+
+
+
+# MAN Pages
+man command     # => Ex: man ls
+ 
+# The man page is displayed with the less command
+# SHORTCUTS:
+# h         => getting help
+# q         => quit
+# enter     => show next line
+# space     => show next screen
+# /string   => search forward for a string
+# ?string   => search backwards for a string
+# n / N     => next/previous appearance
+
+
+Ctrl + L is for clearing the screen
+
+Ctrl + D closes the terminal
+
+Ctrl + A moves the cursor to the beginning of the command
+
+Ctrl + E moves the cursor to the end of the line
+
+wget is used to download anything from a webpage just giving the link to after wget does the trick
+
+ping will continue to send packets. To end we need to Ctrl + C
+
+
+    ##########################
+    ## Keyboard Shortcuts
+    ##########################
+    TAB  # autocompletes the command or the filename if its unique
+    TAB TAB (press twice)   # displays all commands or filenames that start with those letters
+     
+    # clearing the terminal
+    CTRL + L
+     
+    # closing the shell (exit)
+    CTRL + D
+     
+    # cutting (removing) the current line 
+    CTRL + U
+     
+    # moving the cursor to the start of the line
+    CTRL + A
+     
+    # moving the cursor to the end of the line
+    Ctrl + E
+     
+    # stopping the current command
+    CTRL + C
+     
+    # sleeping a the running program
+    CTRL + Z
+     
+    # opening a terminal 
+    CTRL + ALT + T
+
+history does not show all the commands from the advent of the machine. The variable $HISTSIZE determines the value
+of the number of commands it is going to show
+
+
+Typing !17 executes the 17th command in the history of commands saved
+
+!! is similar to using the up arrow for the last executed command
+
+!ping executes the last command involving the ping command
+
+
+history -c removes the entire history of commands
+
+history -d line_number deletes the command on the line_number
+
+If we prefix the command with a space, the command is not saved in the history of the commands
+
+There is a variable named HISTCONTROL which actually decides what to ignore and what to include
+
+If HISTCONTROL is set to ignoredups then the bash will ignore the spaces and save the command to the history.
+
+If we set the HISTCONTROL to ignoreboth then the command ignores both the consecutive duplicates as well as the commands prepended with a space.
+
+>> bash.txt will save anything to the file
+
+echo "HISTTIMEFORMAT="%d/%m/%y %T"" >> .bashrc
+
+
+    ##########################
+    ## Bash History
+    ##########################
+     
+    # showing the history
+    history
+     
+    # removing a line (ex: 100) from the history
+    history -d 100
+     
+    # removing the entire history
+    history -c
+     
+    # printing the no. of commands saved in the history file (~/.bash_history)
+    echo $HISTFILESIZE
+     
+    # printing the no. of history commands saved in the memory
+    echo $HISTSIZE
+     
+    # rerunning the last command from the history
+    !!
+     
+    # running  a specific command from the history (ex: the 20th command)
+    !20
+     
+    # running the last nth (10th) command from the history
+    !-10
+     
+    # running the last command starting with abc 
+    !abc
+     
+    # printing the last command starting with abc 
+    !abc:p
+     
+    # reverse searching into the history
+    CTRL + R
+     
+    # recording the date and time of each command in the history
+    HISTTIMEFORMAT="%d/%m/%y %T"
+     
+    # making it persistent after reboot
+    echo "HISTTIMEFORMAT=\"%d/%m/%y %T\"" >> ~/.bashrc
+    # or
+    echo 'HISTTIMEFORMAT="%d/%m/%y %T"' >> ~/.bashrc
+
+sudo -su logs me in with the root superuser
+
+If we type sudo -su -, then it activates the root working environment
+
+groupadd myadmin gives a permission error without using sudo since only the root user is allowed to create a group
+For adding a user the command is sudo useradd john
+
+sudo policy says that it will cache the password for exactly 5 minutes
+
+sudo -s again validates the cached credentials of the user.
+
+sudo -k removes the validated cached credentials of the user.
+
+sudo passwd root prompt to set a password for root or to change the password for any other user.
+
+su command then directly logs me as the root user in the shell
+
+/ is the default root folder and should not be confused with the /root/
+
+
+    ##########################
+    ## Running commands as root (sudo, su)
+    ##########################
+     
+    # running a command as root (only users that belong to sudo group [Ubuntu] or wheel [CentOS])
+    sudo command
+     
+    # becoming root temporarily in the terminal
+    sudo su      # => enter the user's password
+     
+    # setting the root password
+    sudo passwd root
+     
+    # changing a user's password
+    passwd username
+     
+    # becoming root temporarily in the terminal
+    su     # => enter the root password
+
+Where are all executed commands saved?
+
+For every user, in the user's home directory, in a file called .bash_history
+
+Which users can run administrative commands as root in a default installation?
+
+Only the initial user created at installation time. This is the default behaviour in Ubuntu
+
+
+Become root temporarily in a terminal.
+
+Run the following command as root: apt update && apt install nmap
+
+Logout root from the terminal using a keyboard shortcut
+
+Change (set) the root password
+
+Become root in a terminal by running the su command
+
+Run as root the following command: lshw
+
+Consider the nmap program installed in a previous challenge. Open its man page and search for the option -sV
+
+Run as root: nmap -sV -p 80 www.example.com
+
+Find the IP address of your Default Gateway running route -n and then run as root: nmap -sV -p 80,443 default_gateway_ip (Example: nmap -sV -p 80,443 192.168.0.1)
+
+To see the root directory contents in the files software, we just need to go to other locations in the files software
+
+/bin contains binaries or user executable files which are available to all users
+
+/sbin contains applications that only the superuser (hence the initial s) will need.
+
+/boot contains the files required for starting the system
+
+/home is where you will find your user's home directories.Under this directory there is another directory for each user, if that particular
+user has a home directory
+
+root has its home directory from the rest of the users' home directories and is /root
+
+/dev contains the device files
+
+/etc contains most, if not all system-wide configuration files.
+
+/lib contains shared library files used by different applications
+
+/media is used for external storage will be automatically mounted.
+
+/mnt is like /media but it's not very often used these days.
+
+which fdisk
+prints usr/sbin/fdisk
+
+/tmp contains temporary files, usually saved there by applications that are running. Non privileged users may also store files here temporarily.
+/proc is a virtual directory. It contains information about your computer hardware, such as information about the CPU, RAM memory or Kernel. The files 
+and directories are generated when your computer starts, or on the fly, as your system is running and things change.
+
+/sys contains information about devices, drivers and some kernel features
+
+/srv contains data for servers
+
+/run is a temporary file system which runs in RAM
+
+/usr contains many other subdirectories binaries files, shared libraries and so on. On some distributions like CentOS many commands are saved
+in /usr/bin and /usr/sbin instead of /bin and /sbin.
+
+/var typically contains variable length files such as logs which are files that register events that happen on the system
+
+Tree is not installed by default in ubuntu.
+
+
+    ##########################
+    ## Linux Paths
+    ##########################
+     
+    .       # => the current working directory
+    ..      # => the parent directory
+    ~       # => the user's home directory
+     
+    cd      # => changing the current directory to user's home directory
+    cd ~    # => changing the current directory to user's home directory
+    cd -    # => changing the current directory to the last directory
+    cd /path_to_dir    # => changing the current directory to path_to_dir 
+    pwd     # => printing the current working directory
+     
+    # installing tree
+    sudo apt install tree
+     
+    tree directory/     # => Ex: tree .
+    tree -d .           # => prints only directories
+    tree -f .           # => prints absolute paths
+
+
+Where is the Desktop directory saved?
+
+For each user, in user's home directory, in a directory called Desktop(ex: ~/Desktop)
+
+ls -1 /etc
+
+The 1 means 1 file per line in linux.
+
+ls -1d /etc/
+
+This displays the information about the etc folder
+
+
+This is a sample output of
+
+ls -l /etc/
+
+-rw-r--r--  1 root        root         3040 Feb  7 16:38 adduser.conf
+-rw-r--r--  1 root        root           44 Apr  1 21:46 adjtime
+-rw-r--r--  1 root        root          213 Apr  1 21:39 aliases
+drwxr-xr-x  3 root        root         4096 Apr  1 21:33 alsa
+drwxr-xr-x  2 root        root        20480 Apr  1 22:09 alternatives
+drwxr-xr-x  8 root        root         4096 Apr  1 22:09 apache2
+drwxr-xr-x  2 root        root         4096 Apr  1 21:31 apparmor
+drwxr-xr-x  8 root        root         4096 Apr  1 22:09 apparmor.d
+drwxr-xr-x  8 root        root         4096 Apr  1 21:46 apt
+drwxr-xr-x  3 root        root         4096 Apr  1 21:40 avahi
+
+
+The first character display the file type
+A - means that it is a normal file
+
+A d means a directory
+
+An l indicates a symbolic link or something like a shortcut
+
+The other 6 characters indicate the permissions of the owner, group owner, file owner and the others
+
+The next field is the size and then the changing time recorded.
+
+Hidden files begin with a .
+
+ls -lS
+
+This sorts the results and the largest file will come first.
+
+To see its real size,
+du -sh /etc/
+
+This displays the real size of the folder
+
+If you dont want to find the files ending in .conf then
+
+we can write this command
+ls --hide=*.conf /etc
+
+To see the directory recursively, we can run
+
+ls -lR
+
+This shows the files inside of the subdirectories
+
+If we run type ls, we will notice that we have never ever used the real ls command. We have always run the ls --color=auto
+
+This means that in case of directories it automatically shows us in blue color, the rest in black. The color convention is determined by the color=auto argument.
+
+##########################
+
+## The ls Command
+
+## ls [OPTIONS] [FILES]
+
+##########################
+
+
+# listing the current directory
+
+# ~ => user's home directory
+
+# . => current directory
+
+# .. => parent directory
+
+ls
+
+ls .
+
+
+# listing more directories
+
+ls ~ /var /
+
+
+# -l => long listing
+
+ls -l ~
+
+
+# -a => listing all files and directories including hidden ones
+
+ls -la ~
+
+
+# -1 => listing on a single column
+
+ls -1 /etc
+
+
+# -d => displaying information about the directory, not about its contents
+
+ls -ld /etc
+
+
+# -h => displaying the size in human readable format
+
+ls -h /etc
+
+
+# -S => displaying sorting by size
+
+ls -Sh /var/log
+
+
+# Note: ls does not display the size of a directory and all its contents. Use du instead
+
+du -sh ~
+
+
+# -X => displaying sorting by extension
+
+ls -lX /etc
+
+
+# --hide => hiding some files
+
+ls --hide=*.log /var/log
+
+
+# -R => displaying a directory recursively
+
+ls -lR ~
+
+
+# -i => displaying the inode number
+
+ls -li /etc
+
+
+Every file on Linux has three timestamps:
+
+1) The access timestamp or atime is the last time the file was read(ls -lu)
+2) The modified timestamp or mtime is the last time the contents of the file was modified (ls -l, ls -lt)
+3) The changed timestamp ctime is the last time when some metadata related to the file was changed (ls -lc)
+
+The stat command is showing the timestamps of the file including the timestamps.
+
+The Access timestamp is the last time the file was read
+The Modify timestamp is the last time the contents of the file were modified
+The Change timestamp is when some metadata related things were changed.
+
+ls -l to see the timestamps
+ls -lt to see the modification timestamps
+ls -lu to see the access time
+ls -lc to see the changed time
+
+To see the full timestamp, add the --full-time to the above ls commands to get them.
+
+To change the modification timestamp, we can do
+
+touch -m linux.txt
+
+To change the access timestamp, we can do
+
+touch -a linux.txt
+
+To change the modification time according to what we need
+
+touch -m -t 201812301530.45 linux.txt
+
+This changes the timestamp to exactly what we need
+
+The format is yyyymdhhmm.ss which is the default behaviour
+
+Another way to change the timestamp is
+
+touch -d "2010-10-31 15:45:30" linux.txt
+
+This is how we can change the timestamp to the one we want
+
+-t and -d accept different time formats
+
+ls -lt sorts the files according to their modification timestamp
+
+
+Renaming a file in linux has the following command
+
+mv ~/Desktop/linux.jpeg ~/Desktop/linux.png
+
+Linux decides the file type with the help of the file headers and not with the help of extensions
+
+
+
+
+
+

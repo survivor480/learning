@@ -1,0 +1,8 @@
+android-sdk 	It provides you the API libraries and developer tools necessary to build, test, and 
+                debug apps for Android.
+apktool 	It is a tool for reengineering Android apk files.
+Arduino 	It is an AVR development board IDE built-in libraries.
+dex2jar 	It converts jar to dex by invoking dx.
+Sakis3G 	It is an all in one script which is used to establish a 3G connection with any combination 
+            of modem or operator.
+smali 	It is an assembler /disassembler for the dex file used by Dalvik.

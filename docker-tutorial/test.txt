@@ -1,0 +1,307 @@
+FROM node:14
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "app.mjs"]
+
+inside the Dockerfile
+
+and then 
+sudo docker build .
+which builds this folder according to the instructions of the Dockerfile.
+
+sudo docker run -p 3000:3000 _______ the docker container id or name
+
+This runs the container to the outside port of 3000 with the inside port of 3000. 
+
+To change the source code inside the already existing image, we need to build it again
+
+sudo docker build .
+
+A little bit of an optimization to reduce npm install time taken for the Dockerfile
+
+FROM node
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY  . /app
+
+EXPOSE 80
+
+CMD ["node", "server.js"]
+
+sudo docker run -p 3000:3000 _______ starts the container in detached mode
+
+docker attach ________ container name opens it in attached mode
+
+docker logs -f _________ container name also does the same
+
+docker run -it ____________ container name opens the container in interactive mode
+
+After the container is already running, we can stop it and then again write
+
+docker start -a -i ___________ container name
+
+To remove all stopped containers at once,
+run docker container prune
+
+else first stop a running container with
+docker stop ______ container name
+
+and then
+docker rm _______ _________ _________ all container names seperated with blank spaces
+
+To remove images from the existing list of images,
+docker rmi _______ image name
+
+If a container is stopped, even then we cannot remove images being used by those containers. We have to remove the containers first and then remove images.
+
+docker run -p 3000:80 -d --rm ___________ container
+This automatically removes the container when it stops.
+
+
+For copying folders from a localhost to a running container
+docker cp dummy/. _________ container name:/test
+
+Test is the location inside the container where the file is going to eb copied to
+
+If we interchange the localhost folder name and the container location, the roles are swapped. Now the folder from the container will be stored into our localhost
+
+We can use the --name option to set the name of the container we want to run.
+
+In case we want a specific version of node in our container, we can mention node:12 in our above Dockerfile
+
+To name an image
+
+docker build -t goals:latest
+
+Goals is the name of the image and latest is the tag of the image
+
+Renaming an image has a special command,
+docker tag node-demo:latest academind/node-hello-world
+The first is the name of a present image already existing on the localhost. The second is the name we want to give the container.
+
+When we rename it, the old image also exists and then there is the new container which is just a clone of the previous container.
+
+To login to the docker hub account.
+Docker login
+
+To push the container into the repository
+docker push ________ the container name assigned on docker hub.
+
+
+To remove all non useful container,
+Docker image prune -a
+
+There are two types of volumes: Anonymous and Named
+
+Anonymous Volumes exists as long as our container is running.
+Named Volumes survive container shutdowns
+
+Named Volumes are not created from Dockerfile
+
+FROM node
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY  . /app
+
+EXPOSE 80
+
+VOLUME ["/app/feeback"]
+
+CMD ["node", "server.js"]
+
+The above shows the creation of an anonymous volume from inside the Dockerfile
+
+
+To create a named volume,
+sudo docker run -d -p 3000:80 --rm --name feedback-app -v feedback:/app/feedback feedback-node:volumes
+
+This feedback:/app/feedback should be part of every container where we want to access the folder created previously.
+
+We saw, that anonymous volumes are removed automatically, when a container is removed.
+
+This happens when you start / run a container with the --rm option.
+
+If you start a container without that option, the anonymous volume would NOT be removed, even if you remove the container (with docker rm ...).
+
+Still, if you then re-create and re-run the container (i.e. you run docker run ... again), a new anonymous volume will be created. So even though the anonymous volume wasn't removed automatically, it'll also not be helpful because a different anonymous volume is attached the next time the container starts (i.e. you removed the old container and run a new one).
+
+Now you just start piling up a bunch of unused anonymous volumes - you can clear them via docker volume rm VOL_NAME or docker volume prune.
+
+We can make changes and then instantly observe it after execution without having to make an image by using bind mounts
+
+sudo docker run -d -p 3000:80 --rm --name feedback-app -v feedback:/app/feedback -v "/home/keshav/Desktop/Docker Tutorial/data-volumes-01-starting-setup:/app" -v /app/node_modules feedback-node:volumes
+
+Using bind mounts we again create a volume but this time we create a mapping with our pc location and the vm location. We run into an error almost instantly because after running the command with the necessary additions, we can observe that the node_modules folder doesnot stay inside the folder and gets deleted as soon as the compiler reaches the copy statement. Hence we create an anonymous volume thus which actually stores our node_modules folder, and hence the problem gets resolved.
+
+For read only bind mounts, we can add an extra colon and write ro, for example "/home/keshav/Desktop/Docker Tutorial/data-volumes-01-starting-setup:/app:ro"
+To write into the folder, we instead can create a /app/temp anonymous volume again, so as to not break anything in the future.
+
+
+Docker supports build-time arguments and runtine environment variables.
+
+Adding an environment variable changes the Dockerfile to
+
+FROM node:14
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+COPY . .
+
+ENV PORT 80
+
+EXPOSE $PORT
+
+VOLUME [ "/app/feedback" ]
+
+CMD ["npm", "start"]
+
+
+Suppose we want to dynamically assign port inside the docker container,
+the change in command will be as follows
+
+sudo docker run -d -p 3000:8000 --env PORT=8000 --rm --name feedback-app -v feedback:/app/feedback -v "/home/keshav/Desktop/Docker Tutorial/data-volumes-01-starting-setup:/app" -v /app/node_modules feedback-node:volumes
+
+
+
+In case we have multiple environment variables, we need to add multiple -e or multiple --env.
+
+We can also create a .env file and then change the command as follows,
+
+sudo docker run -d -p 3000:8000 --env-file ./.env --rm --name feedback-app -v feedback:/app/feedback -v "/home/keshav/Desktop/Docker Tutorial/data-volumes-01-starting-setup:/app" -v /app/node_modules feedback-node:volumes
+
+The file just contains the line PORT=8000
+
+Instead of communicating with localhost, we can communicate with host.docker.internal as address.
+
+We can inspect the container using
+
+docker inspect ___________ container name
+
+The default ip address on the local machine of docker is 172.17.0.2
+
+We can also create a local network inside of docker 
+
+We can create a network using the docker network command.
+
+docker network create ____________ network name
+
+With docker network ls, we can have a look as what are the different networks in docker
+
+For pushing them into the same network,
+we can use
+
+docker run -d --name mongodb --network favourites-net mongo
+
+Then we donot need to write the ip of docker,
+
+instead we can write the name of the container in the place of the ip
+
+
+
+/************************************************************************************************************************************************************
+
+Docker also supports these alternative drivers - though you will use the "bridge" driver in most cases:
+
+host: For standalone containers, isolation between container and host system is removed (i.e. they share localhost as a network)
+
+overlay: Multiple Docker daemons (i.e. Docker running on different machines) are able to connect with each other. Only works in "Swarm" mode which is a dated / almost deprecated way of connecting multiple containers
+
+macvlan: You can set a custom MAC address to a container - this address can then be used for communication with that container
+
+none: All networking is disabled.
+
+Third-party plugins: You can install third-party plugins which then may add all kinds of behaviors and functionalities
+
+/************************************************************************************************************************************************************
+
+Below is what a docker-compose.yaml file looks like
+
+version: "3.8"
+services:
+  mongodb:
+    image: 'mongo'
+    # volumes: 
+    #   # - data:/data/db:ro
+    #   - data:/data/db
+    container_name: mongodb
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME: keshav
+    #   - MONGO_INITDB_ROOT_PASSWORD: secret
+      # - MONGO_INITDB_ROOT_USERNAME=keshav
+    env_file:
+      - ./env/mongo.env
+    # networks:
+    #   - goals-net
+
+  backend:
+    build: ./backend
+    # build: 
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    #   args:
+    #     some-arg: 1
+
+    ports:
+      - "80:80"
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
+  frontend: 
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+
+
+The command to get this running is simply docker-compose up
+
+In case we want the images to be rebuilt after applying docker-compose we can use
+
+docker-compose up --build
+
+We use stdin_open so as to open the container for input
+
+We can create a utility container just like node by the following command
+
+docker run -it -v '/home/keshav/Desktop/Docker Tutorial:/app' node-util npm init
+
+In case we don't want to input certain commands everytime, we encounter a container for example: if we dont want to input npm as a command everytime,
+we can specify the below statement in the Dockerfile
+
+ENTRYPOINT ["npm"]
+
+Now instead of writing npm everytime we can just state the command we need to append with npm
+
+
+We can run docker-compose run command to run the container
+
+For example docker-compose run npm init
+

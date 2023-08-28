@@ -1,0 +1,23 @@
+cryptCat 	It reads and writes data across all network connections, using TCP or UDP protocol while 
+            encrypting the data that is transmitted.
+Cymothoa 	It is a backdooring tool that injects backdoor's shellcode into an existing process.
+Dbd 	It is a Netcat-clone, which offers strong encryption and runs on Unix like operating systems and on 
+        Microsoft Win32.
+dns2tcp 	It is a network tool designed to relay TCP connection through DNS traffic.
+HTTPTunnel 	It is used to tunnel network connections through a restrictive HTTP proxy.
+Intersect 	It is an Intersect Post-exploitation framework.
+Nishang 	It enables usages of PowerShell for offensive security and posts exploitation during Penetration 
+            Tests.
+polenum 	It extracts the password policy from a windows system.
+PowerSploit 	It is a series of Microsoft Powershell scripts that can be used in post-exploitation 
+                scenarios during authorized penetration tests.
+Pwnat 	It is a NAT to NAT client-server communication.
+RidEnum 	It is an attack that enumerates user accounts through null sessions and SID to RID enum.
+sbd 	It is a secure backdoor for Linux and Windows systems.
+Shellter 	It is a dynamic shellcode injection tool and dynamic PE infector used to inject shellcode into 
+            native Windows applications.
+U3-Pwn 	It is a Metasploit Payload Injection Tool for SanDisk Devices.
+Webshells 	It is a collection of webshells for ASP, ASPX, CFM, JSP, Perl, and PHP servers.
+Weevely 	It is a stealth web shell that stimulates telnet-like connections used for web application post 
+            exploitation.
+Winexe 	It is a remote windows command executor.

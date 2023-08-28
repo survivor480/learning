@@ -1,0 +1,13 @@
+apktool 	It is a tool for reengineering Android apk files that can decode resources to the nearly 
+            original form and rebuild them after the modification.
+dex2jar 	It converts jar to dex by invoking dx.
+diStorm3 	It is a lightweight, easy to use and fast decomposer library.
+edb-debugger 	It is a modular and cross platform debugger.
+jad 	It is a java de-compiler.
+javasnoop 	It attaches itself to an existing process and instantly begin tampering with method calls, 
+            run custom code, or just analyse the processing of the system.
+JD-GUI 	It is a graphical utility that displays java source codes of ".class" files.
+OllyDbg 	It is a 32-bit assembler level analysing debugger for Microsoft Windows.
+smali 	It is an assembler /disassembler for the dex file used by dalvik.
+Valgrind 	It is a tool for debugging and profiling Linux programs.
+YARA 	Using YARA, you can create a description of malware based on textual or binary patterns.

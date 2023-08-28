@@ -1,0 +1,21 @@
+touch .gitignore
+git config --global user.name Keshav
+git config --global user.email keshavkjha1999@gmail.com
+git init
+git add .
+git commit -m "Initial Commit"
+git status 
+ssh-keygen -t rsa -b 4096 -C "keshavkjha1999@gmail.com"
+cat <path of keygen>
+git push origin master
+
+
+
+
+
+Useful Applications for certain use cases
+1) Wavvy.app:- This is an audio editing application.
+2) Ninite.com:- This application just combines all frequently needed applications and combines them and then makes a single file out of it.
+3) Skyscanner.com:- This application shows the cheapest alternatives of flights in India.
+4) Toffee Share:- This website allows to share big files while the sender laptop is open.
+5) wordtune.com:- Forms better sentences.

@@ -1,0 +1,47 @@
+bettercap 	It works like a Swiss army knife for network attacks and monitoring. It is a tool for network 
+            capture, analysis, and MITM attacks.
+Burp Suite 	Burp Suit is a platform for security testing of web applications.
+DNSChef 	It is a highly configurable DNS proxy for Penetration Testers and Malware Analyst.
+fiked 	It is a Cisco VPN attack tool that is used to attack insecure Cisco VPN PSK+XAUTH based IPsec 
+        authentication setups, which are called as semi MitM attack.
+hamster-sidejack 	It is a side-jacking tool that acts like a proxy server that replaces your cookies 
+                    with session cookies stolen from somebody else.
+HexInject 	It is a hexadecimal packet injector or sniffer which is capable of reading, intercepting, and 
+            modifying network traffic in a transparent manner.
+iaxflood 	It is a VOIP flooder tool.
+inviteflood 	It is a SIP/SDP INVITE message flooding over UDP/IP.
+iSMTP 	This tool tests for SMTP user enumeration, internal spoofing, and relay.
+isr-evilgrade 	It is an Evilgrade framework that allows the user to take advantage of poor upgrade 
+                implementations by injecting fake updates.
+mitmproxy 	It is an HTTP proxy that provides a console interface that allows traffic flows to be inspected 
+            and edited.
+ohrwurn 	It is an RTP fuzzer that reads SIP messages to get information about the RTP port numbers.
+protos-sip 	It evaluates the implementation level security and robustness of Session Initiation Protocol 
+            implementation.
+rebind 	It is a DNS rebinding tool that implements the multiple A record DNS rebinding attack.
+responder 	It is an LLMNR and NBT-NS responder which answers to specific NBT-NS queries based on their name 
+            suffix.
+rtpbreak 	It detects, reconstructs and analyses RTP sessions
+rtpinsertsound 	This tool is used to insert audio into a specified stream.
+sctpscan 	It is a tool to mix pre-recorded audio in real-time with the audio in the specified target audio 
+            stream.
+SIPArmyKnife 	It is a fuzzer that searches for cross site scripting SQL injection, log injection, format 
+                strings, buffer overflow, etc
+SIPp 	It is a traffic generator for the SIP protocol.
+SIPVicious 	It is an online password cracker that is used to audit SIP based VoIP systems.
+Sniffjoke 	It is a transparent TCP connection scrambler that delays, modify and inject fake packets inside 
+            your transmission.
+SSLsplit 	It is a transparent and scalable SSL/ TLS interception used for man-in-the -middle attacks 
+            against SSL/TLS encrypted network connections.
+sslstrip 	It is an SSL/TLS man-in-the-middle attack tool that is used to hijack HTTP traffic on a network 
+            transparently.
+THC-IPV6 	It converts a MAC or IPv4 address to an IPv6 address.
+VoIPHopper 	It mimics the behaviour of IP phones to rapidly run a VLAN hop into the voice VLAN on specific 
+            Ethernet switches.
+WebScarab 	It is a web application review tool used to expose the working of an HTTP based application.
+Wifi Honey 	It creates five monitor mode interfaces, in which four are used as access points, and the fifth 
+            is used for airodump-ng.
+Wireshark 	It is a network protocol/traffic analyser. It allows us to monitor our network at a microscopic 
+            level.
+xspy 	It is a keystroke sniffer that sniffs keystrokes on remote or local X-Windows servers.
+zaproxy 	It is a penetration testing tool for finding vulnerabilities in web applications.

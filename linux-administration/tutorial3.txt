@@ -1,0 +1,520 @@
+## FIND ##
+find PATH OPTIONS
+ 
+# Example: find ~ -type f -size +1M # => finding all files in ~ bigger than 1 MB
+ 
+## Options:
+# -type f, d, l, s, p
+# -name filename
+# -iname filename # => case-insensitive
+# -size n, +n, -n
+# -perm permissions
+# -links n, +n, -n
+# -atime n, -mtime n, ctime n
+# -user owner
+# -group group_owner
+
+
+To find a directory or a file by name or date or any pattern, we can use the find command
+
+find . -name todo.txt
+
+if we use -iname instead of -name, the search will be case insensitive.
+
+find . -name todo will show us nothing in case we dont have the exact file inside the directory we are at.
+
+But if we want all the files without caring of the extension, we can use find . -name todo*
+
+If we pass the delete option, it will delete the file with no possibility of recovering it.
+
+find . -name todo.txt -delete
+
+Another command we can pass is the -ls command with the find command such that it will run the ls command on every
+file it finds
+
+sudo find /etc/ -name passwd -ls
+
+If we want to search for directories in the given folder,
+
+find \etc\ -type d
+
+We can also specify the maximum depth to which the find command can go,
+
+find /etc/ -type d -maxdepth 2
+
+We have another option -perm which will search by those exact permissions
+
+find /etc/ -type d -maxdepth 2 -perm 755
+
+find /var -type f -size 100k -ls
+
+It will search for files of size 100k rounded up to the next unit.
+
+If we want files between the size of 5M and 10M, we can use
+
+sudo find /var -type f -size +5M -size -10M 
+
+If we want to see files modified within the past 24 hours,
+
+find /var -type f -mtime 0 -ls
+
+Here mtime 1 means files modified between 1 and 2 days ago. mtime 0 means files modified between 0 and 1 day ago.
+
+If you want to search by minute instead of days use -mmin, -amin etc.
+
+To search for files that belong to a particular user,
+find /var/ -type f gdm -ls
+
+TO execute a command along with find, we can use
+sudo find /etc -type f -mtime 0 -exec cat {} \;
+
+This will execute the cat command to all the files it finds in the find command. The command ends when it finds
+the \ sign
+
+We can also copy the files we get into a seperate folder by using the cp command along with the find command
+sudo find /etc -type f -mtime 0 -exec cp {} /root/backup \;
+
+To find the specific pattern in a particular file we can use the grep command in the following way.
+
+grep user /etc/ssh/ssh_config
+
+Adding -i finds it without caring about the case.
+Adding -n gives the line numbers where it found the lines
+
+To find the exact word in the file we can use the -w option
+
+Using the -v option will invert the match. It will list the lines that donot contain the word.
+
+To find the text recursively in the dictionary, we can use the -R option
+
+To suppress the errors about the non readable or the non accessible files, use -s option
+
+-c option displays the count of the occurences in the output.
+
+grep -c error /var/log/syslog
+
+dmesg command displays the kernel ring buffer. Most of the contents are produced by the device drivers.
+
+If we give the command
+dmesg | grep -A 3 -B 4 error
+This displays 4 lines before the match and 3 lines after it.
+
+If we want exactly 3 lines before and 3 lines after,
+dmesg | grep -C 3 error
+This prints 3 lines before the match and 3 lines after
+
+sudo netstat -tupan shows the available ports which have some processes running
+
+If we want to see what is running on port 53, we can use
+sudo netstat -tupan | grep 53
+
+To exclude the empty lines in grep, we can use
+ls -RF /etc/ | grep -v / | grep -v "^$"
+
+To sort the output, we can use the sort command
+sudo ls -RF /etc/ | grep -v / | grep -v "^$" | sort -r
+sort -r will sort it in the reverse manner
+
+##########################
+## Searching for text patterns (grep)
+##########################
+ 
+grep [OPTIONS] pattern file
+ 
+Options:
+-n          # => print line number
+-i          # => case insensitive
+-v          # inverse the match
+-w          # search for whole words
+-a          # search in binary files
+-R          # search in directory recursively
+-c          # display only the no. of matches
+-C n        # display a context (n lines before and after the match)
+ 
+ 
+# printing ASCII chars from a binary file
+strings binary_file
+
+
+strings /usr/bin/ls
+This displays the ascii characters that are embedded into ls
+
+ls -l /dev/mem
+This is the character image of the main memory
+
+To look into the ascii characters present in the main memory we can use the strings command
+sudo strings /dev/mem | less 
+
+To compare 2 files in linux we can use the cmp command. It will compare the two files byte by byte
+and display the first instance where they differ.
+In case there is no difference, it does not output anything.
+
+Another way to see the difference is to compare their hashes.
+We can calculate their hash by the following command
+
+sha256sum /usr/bin/ls ./ls
+since they would be having the same hash they are identical
+
+diff command is to only get the difference between two text files
+
+The diff command shows the output as 15c15, this means the line 15 of first file and line 15 of second file are changed. The c
+in the middle stands for changed.
+
+In vim, :wq exits from the file.
+
+The basic modes of the VIM editor are:
+1) command mode
+2) insert mode
+3) last line mode
+
+When we enter in a file using vim, we are by default in the command mode.
+
+Any of the line inserted will act as a command for vim
+
+To enter into the insert mode, press lower case i. Now we can edit like any other text editor until esc is pressed
+
+If we press the upper case I, it will start inserting text in the beginning of the line.
+
+If we press lower case a, vim will append the text after the cursor. 
+
+Upper case A appends the text after the current line.
+
+lower case o means to write the text in the new line below the cursor line.
+
+Upper case O means to write the text in the new line above the current line.
+
+To enter into the last line mode, just type in the command : and it will take to the last line of the file.
+
+To save the file without closing, w! is the command to be inserted.
+
+To quit without saving, q! is the command to be inserted.
+
+To find the text matching a certain pattern, we should input the pattern after /, such as /ssh. To go
+to the next match we can go with the n command and to go to the prior match we can go by shift N or upper case N 
+
+To search from the end, we can do that by replacing the / with the ?. We can go to the end of the file by pressing g,
+
+To go to the last save version of the file, all we have to do is to pass in the e!.
+
+If we want to cut a line, press dd
+To paste the line, press p 
+
+The command "set nu" shows the line numbers in vim code editor
+The opposite of "set nu" is "set nonu"
+Syntax highlighting is switched on by default. We can switch it off by "syntax off" command. To switch it back on "syntax on"
+
+Now to save our regular settings for vim, we can create a file in the users home directory called .vimrc, 
+and write the commands like
+set nu
+syntax on
+This will always execute the commands prior to opening vim.
+
+##########################
+## VIM
+##########################
+ 
+Modes of operation: Command, Insert, and Last Line Modes.
+VIM Config File: ~/.vimrc
+ 
+# Entering the Insert Mode from the Command Mode
+i  => insert before the cursor
+I  => insert at the beginning of the line
+a  => insert after the cursor
+A  => insert at the end of the line
+o  => insert on the next line
+ 
+# Entering the Last Line Mode from the Command Mode
+:
+ 
+# Returning to Command Mode from Insert or Last Line Mode 
+ESC
+ 
+# Shortcuts in Last Line Mode
+w!  => write/save the file
+q!  => quit the file without saving
+wq! => save/write and quit
+e!  => undo to the last saved version of the file
+set nu => set line numbers
+set nonu  => unset line numbers
+syntax on|off
+%s/search_string/replace_string/g
+ 
+# Shortcuts in Command Mode
+x   => remove char under the cursor
+dd  => cut the current line
+5dd => cut 5 lines
+ZZ  => save and quit
+u   => undo
+G   => move to the end of file
+$   => move to the end of line
+0 or ^  => move to the beginning of file
+:n (Ex :10) => move to line n
+Shift+v     => select the current line
+y           => yank/copy to clipboard
+p           => paste after the cursor
+P           => paste before the cursor
+/string     => search for string forward
+?string     => search for string backward
+n           => next occurrence
+N           => previous occurrence
+ 
+# Opening more files in stacked windows
+vim -o file1 file2
+ 
+# Opening more files and highlighting the differences
+vim -d file1 file2
+Ctrl+w => move between files
+
+Q) How can you save and exit a file from the command mode?
+Answer: Press ZZ
+
+To compress a directory into a zip file, we can write the command
+sudo tar -czvf etc.tar.gz /etc/
+
+Option -c means create an archive
+Option -z tells tar to also compress the file using gzip or gnuzip compression
+Option -f allows to specify the filename of the archive
+
+Another compression mechanism is bz2
+sudo tar -cjvf etc.tar.bz2 /etc/
+
+We can use the --exclude option to exclude files from the tar interface.
+
+Now to extract a compressed file, we can use the option -x which is short for extract.
+
+To extract a bz2 file, we just need to change z to j.
+
+To create a file with the current date on it,
+tar -cjvf etc-$(date + %F).tar.bz2 /etc/
+
+gzip can be used to compress a file. gunzip is used to extract a file.
+bzip2, bunzip2 are used for their specific actions.
+
+Every file has a corresponding number called the inode number. The inode number can be viewed by the -i option
+in the ls command. The number like 270217 archive.tar.gz is the inode number corresponding to the file.
+
+An association between a file structure and the file name is called a hard link.
+
+Now we can link two files by the ln command.
+ln a.txt b.txt
+This makes both of their inode number same.
+
+We can find files with more than one links using the file command
+
+find /usr/ -type f -links +1 -ls
+
+synlink is similar to shortcuts in windows.
+We can create symlinks with the help of the following command.
+ln -s /etc/passwd ./pswd
+If we see the output of this, in "ls -l pswd" we will notice that it shows a pointer sign to its original file.
+
+"ps aux" displays all running processes.
+If we move a file to another directory, the hard link is not affected but the symlink will be broken.
+
+Q) who > users.txt
+ln users.txt u.txt
+ln -s u.txt my_users.txt
+
+How many hard links does u.txt have?
+
+Answer: 2
+
+Now we are exploring the passwd file fields one by one.
+The first field is the name of the user. The second field indicates that there is a password assigned to the user,
+if that field is empty means no need of password for that user. x means a password is assigned and stored in a shadow
+file.
+
+The third field is the user id.
+The fourth field is the group id.
+The fifth field is a comment usually empty.
+The sixth field is the home directory of the user.
+The seventh field is the default shell of the user.
+
+We can get the complete details of the user details and how to access from "man shadow".
+
+Usually the password format is set to $type$salt$hash
+The type chart is as follows:
+1) MD5
+2a) Blowfish
+2y) Eksblowfish
+5) SHA-256
+6) SHA-512
+
+A salt combined with the password is added to the hashing process to enforce the uniqueness of the output hash. The
+salt is randomly generated but is not a secret like the password is.
+We can have a look at the shadow file. It is present inside the /etc/shadow
+
+Groups
+There are two types of groups that a user can belong to:
+1. The primary group: the id is stored in /etc/passwd and the group name in /etc/group
+2. Secondary groups: stored in /etc/group
+tail -n 3 letc/group
+geoclue:x:127:
+pulse:x:128:
+pulse-access:x:129:
+gdm:x:130:
+Ixd:x:131:student, john
+student:x:1000:
+
+If we use the "groups" command, it will print out all the groups the current user belongs to.
+
+To create a home directory for a user when adding a user
+
+sudo useradd -m u1
+
+To add various options to this command, we can add
+sudo useradd -m -d /home/james -c "C++ Developer" -s /bin/bash -G sudo,adm,mail james
+
+If we want expiry of a user, we can add the user as follows:
+sudo useradd -e 2020-12-31 u2
+
+To check the age of the user,
+chage -l james
+
+This reveals the details of the specific user, like the last password change, password expires
+password inactive, account expires, minimum number of days between password change, maximum number of days
+between password change, and number of days of warning before password expires.
+
+For user u2, it will show the account expires as Dec 31, 2020.
+
+Change the already available details of a user,
+sudo usermod -c "Golang Developer" james
+
+To add a group, we can use sudo groupadd developers
+To add a group, we can use sudo groupadd managers
+
+For adding the user james to these groups,
+sudo usermod -G developers, managers james
+
+sudo usermod -aG sudo james
+groups james
+
+To delete a user, sudo userdel -r james
+
+If we become another user, unless we add the user to the sudo group, that user is not able to execute commands
+even after using sudo.
+
+sudo groupadd engineering, creates a group.
+
+tail -3 /etc/group, reveals the most recent users.
+
+We can add users into groups by the following command,
+
+sudo useradd -G engineering u3
+
+groups u3
+
+To know the current user of the system, run whoami,
+it is equivalent to id -un
+
+To know the name of the user who initially logged in,
+just pass the command "who"
+
+The who -aH command shows more information about the currently logged in users.
+
+Whenever a user logs into a system, a record of that user is entered into a file,
+which can be accessed by ls -l /var/log/wtmp
+The last command will cover his last.
+
+##########################
+## Account Management
+##########################
+ 
+## IMPORTANT FILES
+# /etc/passwd # => users and info: username:x:uid:gid:comment:home_directory:login_shell
+# /etc/shadow # => users' passwords
+# /etc/group # => groups
+ 
+# creating a user account
+useradd [OPTIONS] username
+# OPTIONS:
+# -m => create home directory
+# -d directory => specify another home directory
+# -c "comment"
+# -s shell
+# -G => specify the secondary groups (must exist)
+# -g => specify the primary group (must exist)
+ 
+Exemple:
+useradd -m -d /home/john -c "C++ Developer" -s /bin/bash -G sudo,adm,mail john
+ 
+# changing a user account
+usermod [OPTIONS] username # => uses the same options as useradd
+Example:
+usermod -aG developers,managers john # => adding the user to two secondary groups
+ 
+# deleting a user account
+userdel -r username # => -r removes user's home directory as well
+ 
+# creating a group
+groupadd group_name
+ 
+# deleting a group
+groupdel group_name
+ 
+# displaying all groups
+cat /etc/groups
+ 
+# displaying the groups a user belongs to
+groups
+ 
+# creating admin users
+# add the user to sudo group in Ubuntu and wheel group in CentOS
+usermod -aG sudo john
+ 
+ 
+## Monitoring Users ##
+who -H # => displays logged in users
+id # => displays the current user and its groups
+whoami # => displays EUID
+ 
+# listing who’s logged in and what’s their current process.
+w
+uptime
+ 
+# printing information about the logins and logouts of the users
+last
+last -u username
+
+Q) How many primary groups can a user belong to?
+Answer: To only one
+
+Q) Input: grep student /etc/passwd
+Output: student:x:1001:1002::/home/student:bin/bash
+Input: grep student /etc/group
+Output: sudo:x:27:stud,student
+student:x:1002:
+
+Here the primary group of the user student is called student
+
+
+File Permissions -1
+
+
+File permissions (file modes) specify who can access, change or execute a file on a
+Linux System.
+It ensures that only authorized users and processes can access files and directories.
+Each file or directory has an owner and a group. By default, the owner is the user who
+creates the file and the group is the primary group of that user.
+The ownership of a file or a directory can be changed only by root using the chown and
+chgrp commands.
+For each file the permissions are assigned to three different categories of users:
+1. The file owner.
+2. The group owner.
+3. Others (anyone else or the whole world).
+
+
+File Permissions 2
+
+
+There are three file permissions types that apply to each category
+.The read permission ()
+.The write permission (w)
+The execute permission (x)
+To view the files permission run: Is -I or stat.
+stud@ubuntu-20:-$ ls -l /etc//passwd
+rw-r-r- 1 root root 2869 aug 2 16:05 etc/passwd
+stud@ubuntu-20:-$
+
+
+

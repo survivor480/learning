@@ -1,0 +1,17 @@
+CaseFile 	It allows you to add the link quickly and analyze data having the same graphic flexibility and 
+            performance without the use of transformation.
+cherrytree 	It is a hierarchical note taking an application that is used to store data in a single xml or 
+            sqlite file.
+CutyCapt 	It is a utility to capture WebKit's rendering of a web page into a variety of vector and bitmap 
+            formats.
+dos2unix 	It contains utilities dos2unix, unix2dos, and mac2unix, unix2mac to convert the line endigs text 
+            file between UNIX, DOS, and Mac formats.
+Dradis 	It is a repository that keeps track of the progress of the application.
+MagicTree 	It is a penetration testing tool that allows data consolidation, querying, external command 
+            execution, and report generation.
+Metagoofil 	It is an information gathering tool that extracts metadata of public documents belonging to a 
+            target company.
+Nipper-ng 	It is a device security and configuration review tool.
+pipal 	It gives you the stats and the information to help you analyse the password.
+RDPY 	It is a Python based Remote Desktop Protocol that is built over the event driven network engine 
+        "Twisted".

@@ -1,0 +1,77 @@
+Airebase-ng 	This tool is used to attack clients as opposed to the Access Point itself. It has the ability
+                to act as an ad-hoc Access Point.
+Aircrack-ng 	It is an 802.11 WEP and WPA-PSK keys cracking tool, which is used to recover the keys once 
+                enough data packets have been captured.
+Airdecap-ng 	It decrypts a WEP/WPA crypted pcap file.
+Airdecloak-ng 	It removes a wep cloaked framed from a pcap file.
+Aireplay-ng 	This tool is used to generate traffic by injecting packets into a wireless network.
+airgraph-ng 	This tool is used to display the output given by the airodump-ng graphically.
+Airmon-ng 	Airmon-ng is a tool used to enable or disable the monitor mode of wireless cards.
+Airodump-ng 	It is used to capture the packet of the wireless network. If we have a connected GPS receiver, 
+                airodump-ng can log the coordinates of the discovered access points.
+Airodump-ng-oui-update 	It is used to download the OUI (Organizationally Unique Identifier) list from the 
+                        IEEE.
+Airolib-ng 	This tool creates and manages a WPA/WPA2 pre-computed hashes tables (essid and password list).
+Airserv-ng 	It is a wireless network card server that allows a wireless application program to individually 
+            use a wireless network card via a Client-server TCP network connection.
+Airtun-ng 	It is a virtual tunnel interface creator that allows encrypted traffic to be monitored for wIDS 
+            purposes and Injects arbitrary traffic into a network.
+Asleap 	It is used to recover LEAP/PPTP passwords.
+Besside-ng 	It will automatically crack all WEP & WPA networks in the range and create a log for the WPA 
+            handshakes.
+Bluelog 	It is a Bluetooth site survey tool used for site surveys and monitoring.
+BlueMaho 	It is used for testing the Bluetooth device's security.
+Bluepot 	It is designed to accept and store any malware sent to it and deal with common attacks such as 
+            BlueBugging and BlueSnarfing.
+BlueRanger 	It is a simple Bash script used to locate Bluetooth devices.
+Bluesnarfer 	It is a Bluetooth snarfing utility that is used to get the device info by scanning the 
+                remote device address.
+Bully 	Bully is the implementation of the WPS brute force attack.
+coWPAtty 	It is an offline dictionary attack against WPA/WPA2 networks using PSK-based authentication.
+Eapmd5pass 	It is an authentication mechanism that does not provide the required protection for user 
+            authentication credentials. It will mount an offline dictionary attack against the user's password.
+Easside-ng 	It is a magic tool that automatically lets you communicate via a WEP- encrypted access point 
+            without knowing the key.
+Fern Wifi Cracker 	It is used for cracking and recovering of WEP/WPA/WPS keys and also runs other network 
+                    based attacks on wireless or Ethernet.
+FreeRADIUS-WPE 	It is a patch tool for FreeRADIUS implementation. It simplifies the setup of FreeRADIUS and 
+                EAP authentication and adds WPE logging.
+Ghost Phisher 	It is wireless and Ethernet security auditing and attack tool able to emulate access points 
+                and deploy.
+GISKismet 	It is a wireless recon visualization tool to represent data gathered using Kismet in a flexible 
+            manner.
+Gqrx 	It is a radio receiver powered by GNU Radio SDR framework and the QT graphical toolkit.
+Gr-scan 	It is a scanner that scans a range of frequencies and prints a list of discovered signals.
+hostapd-wpe 	It is used to implement an Authenticator and Authentication Server impersonation attacks to 
+                obtain client credentials, establish connectivity to the client.
+Ivstools 	It is used to merge and convert .ivs files.
+Kalibrate-rtl 	It calculates local oscillator frequency offset using GSM base station.
+KillerBee 	It is used for exploring and exploiting the security of ZigBee and IEE 802.15.4 networks.
+Kismet 	It is a wireless network detector, sniffer, and intrusion detection system. You can use it with 
+        any wireless card that supports raw monitoring (rfmon) mode.
+makeivs-ng 	It generates a dummy IVS dump file with a specific WEP key.
+mdk3 	It is a wireless attack tool for IEEE 802.11 networks that exploit IEEE 802.11 protocol weakness.
+mfcuk 	It is a MIfare Classic DarkSide key Recovery Tool.
+mfoc 	It allows you to recover authentication keys from MIFARE classic cards.
+mfterm 	It is a terminal interface for working with Mifare Classic tags.
+Multimon-NG 	It is a Digital radio transmission decoder that decodes these digital transmission modes: 
+                EAS, UFSK1200, HAPN4800, POCSAG512, MORSE CW.
+Packetforge-ng 	It is used to create encrypted packets that can subsequently be used for injection. It forges 
+                packets: ARP, UDP, ICMP, or custom packets.
+PixieWPS 	It is used to bruteforce the WPS pin offline.
+Pyrit 	It is used to create a huge database of pre-computed WPA/WPA2-PSK authentication phase in a 
+        space-time-tradeoff.
+Reaver 	It implements a brute-force attack against Wifi Protected Setup register PINs in order to recover 
+        WPA/WPA2 passphrases.
+redfang 	It is used to find non discoverable Bluetooth devices.
+RTLSDR Scanner 	It is a graphical user interface for USB TV dongles using the OsmoSDR rtlsdr library.
+Spooftooph 	It is used to automate spoofing or cloning Bluetooth devices' information.
+Tkiptun-ng 	It is used to inject few frames into a WPA TKIP network with QoS.
+Wesside-ng 	It cracks a WEP key of an open network without user interference.
+Wifi Honey 	It creates five monitor mode interfaces, from which four are used as access points, and the 
+            fifth is used for airodump-ng.
+wifiphisher 	It is an automated phishing attack against Wi-Fi networks.
+Wifitap 	It is used to establish communication over a WiFi network using traffic injection.
+Wifite 	It is a wireless auditing tool designed to attack multiple WEP, WPA, and WPS encrypted networks 
+        in a row.
+wpaclean 	It is used to clean captured files to get only the 4-way handshake and a beacon.

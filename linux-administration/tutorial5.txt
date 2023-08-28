@@ -1,0 +1,536 @@
+To view the ip address, we can view it in ifconfig
+We can also view the ip address using the ip address show
+It can also be seen by ip addr show or ip a show
+All of them work the same.
+We can also omit the show command because it is the default behaviour of the command.
+ip a also works the same as the others
+
+To view the ipv4 address, we can have a look at ip -4 address
+To view the ipv6 address, we can have a look at ip -6 address
+
+We can view the details of a specific interface by the following command
+ifconfig enp0s3
+ip addr show dev enp0s3
+
+Both work the same
+Short form of the second one is ip a s dev enp0s3
+
+To set an interface down, ip link set enp0s3 down.
+
+We can configure the ip of the particular interface, 
+ifconfig enp0s3 192.168.0.111/24 up
+
+To remove the existing details of an interface,
+ip address del 192.168.0.111/24 dev enp0s3
+To add the new details in the interface
+ip address add 192.168.0.222/24 dev enp0s3
+
+The route -n shows the default gateways for the different interfaces.
+To add a new default gateway for the interfaces, we can do the following procedure
+ip route show
+This shows the routes and the default configuration.
+To delete the default configuration ip route del default.
+To add the default configuration again, ip route add default via 192.168.0.1
+
+To change the mac address of the interface, 
+ifconfig enp0s3 down
+ifconfig enp0s3 hw ether 08:00:27:51:05:09
+ifconfig enp0s3 up
+
+To change it by avoiding so many commands,
+ip link set dev enp0s3 address 08:00:27:51:05:01
+
+
+##########################
+## Getting info about the network interfaces (ifconfig, ip, route)
+##########################
+ 
+# displaying information about enabled interfaces
+ifconfig
+ 
+# displaying information about all interfaces (enabled and disabled)
+ifconfig -a
+ip address show
+ 
+# displaying info about a specific interface
+ifconfig enp0s3
+ip addr show dev enp0s3
+ 
+# showing only IPv4 info
+ip -4 address
+ 
+# showing only IPv6 info
+ip -6 address
+ 
+# displaying L2 info (including the MAC address)
+ip link show
+ip link show dev enp0s3
+ 
+# displaying the default gateway
+route 
+route -n    # numerical addresses
+ip route show
+ 
+# displaying the DNS servers
+systemd-resolve --status
+ 
+ 
+##########################
+## Setting the network interfaces (ifconfig, ip, route)
+##########################
+# disabling an interface
+ifconfig enp0s3 down
+ip link set enp0s3 down
+ 
+# activating an interface
+ifconfig enp0s3 up
+ip link set enp0s3 up
+ 
+# checking its status
+ifconfig -a
+ip link show dev enp0s3
+ 
+# setting an ip address on an interface
+ifconfig enp0s3 192.168.0.222/24 up
+ip address del 192.168.0.111/24 dev enp0s3
+ip address add 192.168.0.112/24 dev enp0s3
+ 
+# setting a secondary ip address on sub-interface
+ifconfig enp0s3:1 10.0.0.1/24
+ 
+# deleting and setting a new default gateway
+route del default gw 192.168.0.1
+route add default gw 192.168.0.2
+ 
+# deleting and setting a new default gateway
+ip route del default
+ip route add default via 192.168.0.1 	
+ 
+# changing the MAC address
+ifconfig enp0s3 down
+ifconfig enp0s3 hw ether 08:00:27:51:05:a1
+ifconfig enp0s3 up
+ 
+# changing the MAC address
+ip link set dev enp0s3 address 08:00:27:51:05:a3
+
+
+Q) How can you display the DNS Servers used by the system?
+Answer: Run resolvectl status
+
+
+
+
+
+The default configuration of ssh is not very secure.
+The server configuration file is can be viewed in ls -l /etc/ssh/
+The server configuration file is named sshd_config
+
+Note that there is another file called ssh_config which is the settings for the client side.
+The sshd_config file stands for ssh daemon.
+
+The port can be changed from uncommenting the line which says # Port 22. The default port for ssh is 22.
+It is highly recommended to change the port number for this since someone trying to take control of the system
+will get access to the system very easily since it the default port.
+We can also set the Permit Root Login to no since it is by default at prohibit-password.
+Anybody having the public key file for login can get access to the system which is something we dont want.
+
+We should configure the ssh upto the firewall level. If the connection has to be made by a limited number of places,
+accept connections from a limited number of IP Addresses.
+
+For me to accept only a limited connections from a specific ip addresses, we can run the following command
+
+iptables -A INPUT -p tcp --dport 2278 -s 2.2.4.5 -j ACCEPT 
+iptables -A INPUT -p tcp --dport 2278 -s 2.45.6.100 -j ACCEPT
+iptables -A INPUT -p tcp --dport 2278 -j DROP 
+
+This accepts connections from a specific ip only.
+
+We can also change the clientaliveinterval to anytime in seconds and also change the clientalivecountmax to 0-any number.
+
+##########################
+## OpenSSH
+##########################
+ 
+# 1. Installing OpenSSH (client and server)
+# Ubuntu
+sudo apt update && sudo apt install openssh-server openssh-client
+ 
+# CentOS
+sudo dnf install openssh-server openssh-clients
+ 
+# connecting to the server
+ssh -p 22 username@server_ip        # => Ex: ssh -p 2267 john@192.168.0.100
+ssh -p 22 -l username server_ip
+ssh -v -p 22 username@server_ip     # => verbose
+ 
+# 2. Controlling the SSHd daemon
+# checking its status
+sudo systemctl status ssh       # => Ubuntu
+sudo systemctl status sshd      # => CentOS
+ 
+# stopping the daemon
+sudo systemctl stop ssh       # => Ubuntu
+sudo systemctl stop sshd      # => CentOS
+ 
+# restarting the daemon
+sudo systemctl restart ssh       # => Ubuntu
+sudo systemctl restart sshd      # => CentOS
+ 
+# enabling at boot time 
+sudo systemctl enable ssh       # => Ubuntu
+sudo systemctl enable sshd      # => CentOS
+ 
+sudo systemctl is-enabled ssh       # => Ubuntu
+sudo systemctl is-enabled sshd      # => CentOS
+ 
+# 3. Securing the SSHd daemon
+# change the configuration file (/etc/ssh/sshd_config) and then restart the server
+man sshd_config
+ 
+a) Change the port
+Port 2278
+ 
+b) Disable direct root login
+PermitRootLogin no
+ 
+c) Limit Users’ SSH access
+AllowUsers stud u1 u2 john
+ 
+d) Filter SSH access at the firewall level (iptables)
+ 
+e) Activate Public Key Authentication and Disable Password Authentication
+ 
+f) Use only SSH Protocol version 2
+ 
+g) Other configurations:
+ClientAliveInterval 300
+ClientAliveCountMax 0
+MaxAuthTries 2
+MaxStartUps 3
+LoginGraceTime 20
+
+
+SCP stands for secure copy and it helps in secure copy of a file from a client to a host.
+The scp command can be used to do either of the three things, copy file from client to server, 
+server to client or server to server.
+
+The command is as follows
+
+scp -P 2278 ip.txt student@192.168.0.20:~
+
+This copies the file to the server home directory.
+In case we want it under a different name to the target machine, we can have it as
+student@192.168.0.20:~/ip_centos.txt
+
+To copy a directory, we can use the -r option which stands for recursive.
+The syntax is as follows:
+
+scp -r -P 22mydir1/ student@192.168.0.20:~
+
+
+When copying a file, the one who is sending file should have read permission on the file.
+The user on the server should have the write permission for writing the file.
+
+To copy something on my machine, we have have the following command run
+
+scp student@192.168.0.20:/etc/passwd /home/student/Desktop/
+
+
+SFTP has more capabilities than scp since it can resume incomplete transfers. SFTP is more complex than SCP.
+WinSCP for Windows and Filezilla are GUI interpretations for copying files.
+
+rsync is used for professional backups and other stuff. This is usually an advanced copy command in linux.
+
+rsync -av /etc/ ~/etc-backup/
+
+This will copy the folder to the backup folder.
+
+The -a option in rsync is telling rsync to run in archive mode. It means it will copy files recursively.
+This method also preserves symlinks.
+The -v option tells rsync to run in verbose mode.
+
+If we copy the same file and execute the same rsync file again, it does not copy anything at all since
+it detects that it is the same thing and it was done.
+
+rsync looks for files that have changed in modified time or in size.
+
+If we dont want any summary messages or any message to be displayed. We can use -q which stands for quiet.
+
+To enable mirroring in both the files, we can use the --delete option.
+Like
+sudo rsync -av --delete /etc/ ~/etc-backup/
+
+Linux has almost the same treatment for directories if we add a trailing slash or not. But rsync does gives different
+treatment for them.
+
+To exclude select files from the rsync , we can use the following treatment.
+
+We create a file called exclude_files.txt which consists of the following content,
+
+movie1.mkv
+dir1/
+*.png
+
+rsync -av --exclude-from='./exclude_files.txt' my_project/ backup/
+
+sudo rsync -av -e ssh /etc/ student@192.168.0.20:~/etc-centos/
+
+This is how we copy the folder using rsync over ssh.
+
+To specify ssh port in rsync, we can use
+
+sudo rsync -av -e 'ssh -p 22' --delete /etc/ student@192.168.0.20:~/etc-centos/
+
+rsync -av -e ssh student@192.168.0.20:~/my_project .
+
+##########################
+## Copying files using SCP and RSYNC
+##########################
+ 
+### SCP ###
+# copying a local file to a remote destination
+scp a.txt john@80.0.0.1:~
+scp -P 2288 a.txt john@80.0.0.1:~       # using a custom port
+ 
+# copying a local file from a remote destination to the current directory
+scp -P 2290 john@80.0.0.1:~/a.txt .
+ 
+# copying a local directory to a remote destination (-r)
+scp -P 2290 -r projects/ john@80.0.0.1:~
+ 
+ 
+### RSYNC ###
+# synchronizing a directory
+sudo rsync -av /etc/ ~/etc-backup/
+ 
+# mirroring (deleting from destination the files that were deleting from source)
+sudo rsync -av --delete /etc/ ~/etc-backup/
+ 
+# excluding files
+rsync -av --exclude-from='~/exclude.txt' source_directory/ destination_directory/
+# exclude.txt:
+# *.avi
+# music/
+# abc.mkv
+ 
+rsync -av --exclude='*.mkv' --exclude='movie1.avi' source_directory/ destination_directory/
+ 
+# synchronizing a directory over the network using SSH
+sudo rsync -av -e ssh /etc/ student@192.168.0.108:~/etc-backup/ 
+ 
+# using a custom port
+sudo rsync -av -e 'ssh -p 2267' /etc/ student@192.168.0.108:~/etc-backup/ 
+
+wget can be used to download a file from http, https and ftp servers
+
+To save the file in another directory,
+
+wget -P kali/ link_for_the_file
+
+To limit the bandwidth to a limited speed, we can use the --limit-rate option.
+wget --limit-rate=100k -P kali/ link_to_be_downloaded
+
+Adding the -c option lets us resume the download from where it ended.
+
+To download multiple files at once, we can have write a file called links.txt and then write the following command
+
+wget -i links.txt
+
+To run the download in the background, we can use the -b option with this command.
+
+To view the log file, we can use
+
+tail -f wget-log
+
+To kill the download, we can use pkill wget.
+
+If we use the nohup signal, we can make it immune to the terminal close action. This will not put any effect on the process
+even if the terminal closes.
+
+Sometimes we want to save a website offline copy for some future use, we can get that easily using wget
+
+wget --mirror --convert-links --adjust-extension --page-requisites --no-parent link_to_the_website
+
+--mirror among other things makes the download recursive.
+
+--convert-links converts all the css paths and files to relative paths for offline viewing.
+
+--adjust-extension will adjust the suitable file name extensions depending on their file type.
+
+--page-requisites will also download css stylesheets and images to properly view the webpage offline.
+
+--no-parent is necessary not to ascend to the parent directory as well.
+
+We can also shorten the command like
+
+wget -mkEpnp link_to_the_website
+
+To view the list of all the services running on the machine we can have
+
+sudo netstat -tupan
+
+-t shows tcp ports 
+-u shows udp ports 
+-p shows process id and the name of the program that is listening.
+
+ss is a similar command to netstat.
+Someway down the line it might replace netstat.
+since it is faster than netstat.
+
+ss -tupan
+
+another useful command is lsof which is list of all files that are opened by any process in the system
+
+To get the processes opened by a specific user
+
+lsof -u student
+
+To view all the files that are not opened by the user root, we can have the following command
+
+lsof -u ^root
+
+To view the files opened by a specific process, we can use the -c option
+
+sudo lsof -c nginx
+
+To view the files that have opened TCP ports, we can use the following command
+
+sudo lsof -iTCP -sTCP:LISTEN 
+
+To view the ports in numeric format, we can use the -nP option
+
+sudo lsof -iTCP -sTCP:LISTEN -nP
+
+To view the details of a specific port, we can have the following command
+
+sudo lsof -iTCP:22 -sTCP:LISTEN -nP
+
+To check if the port 22 is open on centos, I can run 
+
+telnet 192.168.0.113 22
+
+We can also have this in telnet google.com 443. This returns a successful message.
+
+To view the most used ports and a summary of a machine, we can use
+
+sudo nmap 192.168.0.113
+
+To see if the port 80 is open on linux.com, 
+
+nmap -p 80 linux.com
+
+##########################
+## WGET
+##########################
+# installing wget
+apt install wget        # => Ubuntu
+dnf install wget        # => CentOS
+ 
+# download a file in the current directory
+wget https://cdimage.kali.org/kali-2020.2/kali-linux-2020.2-installer-amd64.iso
+ 
+# resuming the download 
+wget -c https://cdimage.kali.org/kali-2020.2/kali-linux-2020.2-installer-amd64.iso
+ 
+# saving the file into a specific directory
+mkdir kali
+wget -P kali/ https://cdimage.kali.org/kali-2020.2/kali-linux-2020.2-installer-amd64.iso
+ 
+# limiting the rate (bandwidth)
+wget --limit-rate=100k -P kali/ https://cdimage.kali.org/kali-2020.2/kali-linux-2020.2-installer-amd64.iso
+ 
+# downloading more files 
+wget -i urls.txt      # urls.txt contains urls
+ 
+# starting the download in the background
+wget -b -P kali/ https://cdimage.kali.org/kali-2020.2/kali-linux-2020.2-installer-amd64.iso
+tail -f wget-log        # => checking its status
+ 
+# getting an offline copy of a website
+wget --mirror --convert-links --adjust-extension --page-requisites --no-parent http://example.org
+wget -mkEpnp http://example.org
+ 
+ 
+##########################
+## NETSTAT and SS
+##########################
+# displaying all open ports and connections
+sudo netstat -tupan
+sudo ss -tupan
+netstat -tupan | grep :80   # => checking if port 80 is open
+ 
+##########################
+## LSOF
+##########################
+# listing all files that are open
+lsof
+ 
+# listing all files opened by the processes of a specific user
+lsof -u username
+ 
+# listing all files opened by a specific process
+lsof -c sshd
+ 
+# listing all files that have opened TCP ports
+lsof -iTCP -sTCP:LISTEN
+lsof -iTCP -sTCP:LISTEN -nP
+ 
+ 
+##########################
+## Scanning hosts and networks using nmap
+##########################
+##** SCAN ONLY YOUR OWN HOSTS AND SERVERS !!! **##
+## Scanning Networks is your own responsibility ##
+ 
+# Syn Scan - Half Open Scanning (root only)
+nmap -sS 192.168.0.1
+ 
+# Connect Scan
+nmap -sT 192.168.0.1
+ 
+# Scanning all ports (0-65535)
+nmap -p- 192.168.0.1
+ 
+# Specifying the ports to scan
+nmap -p 20,22-100,443,1000-2000 192.168.0.1
+ 
+# Scan Version
+nmap -p 22,80 -sV 192.168.0.1
+ 
+# Ping scanning (entire Network)
+nmap -sP 192.168.0.0/24
+ 
+# Treat all hosts as online -- skip host discovery
+nmap -Pn 192.168.0.0/24
+ 
+# Excluding an IP
+nmap -sS 192.168.0.0/24 --exclude 192.168.0.10
+ 
+# Saving the scanning report to a file
+nmap -oN output.txt 192.168.0.1
+ 
+# OS Detection
+nmap -O 192.168.0.1
+ 
+# Enable OS detection, version detection, script scanning, and traceroute
+nmap -A 192.168.0.1
+ 
+# reading the targets from a file (ip/name/network separated by a new line or a whitespace)
+nmap -p 80 -iL hosts.txt 
+ 
+# exporting to out output file and disabling reverse DNS
+nmap -n -iL hosts.txt -p 80 -oN output.txt
+
+
+
+
+
+
+
+
+
+
+
+
+

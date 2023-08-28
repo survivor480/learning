@@ -1,0 +1,119 @@
+man ls
+The man command takes us to the manual of the particular command.
+
+which $SHELL
+gives us the output as /bin/bash
+
+#! is known as the sheban
+This tells us what scripting language do we want in place.
+For example,
+#!/bin/bash
+tells that this is a bash script
+
+sleep 3 makes the script sleep for 3 seconds
+
+ls -l
+This command provides a good list of files along with read and write and user access permissions
+
+name="Patricia"
+This name is a variable
+
+read name
+can take in input and store it in a variable called name.
+
+If we want to take the input of the name while execution of the file,
+name = $1
+then ./test.sh Abbey will give us the desired results.
+More than one arguments can be taken as input by just increasing the number after the dollar.
+
+Get already known outputs as input by the following way:
+user=$(whoami)
+date=$(date)
+whereami=$(pwd)
+
+echo $RANDOM
+Prints out random numbers everytime it gets invoked.
+
+echo $PWD, echo $HOSTNAME
+These print out their respective things
+
+entering twitter="Elon Musk" 
+and then echo $twitter will give us the output as Elon Musk
+
+export twitter makes the variable an environmental variable
+
+nano .bashrc
+At the very end of this file,
+export twitter="Elon Musk"
+
+This makes this variable a permanent environment variable
+
+echo $((2+3))
+works as expected
+
+echo $(($RANDOM % 10))
+works as expected
+
+if [[ $coffee == "y" ]]; then
+	echo "You're awesome"
+else
+	echo "Leave right now!!!"
+fi
+
+In case of else if, we use elif just like python
+
+Switch case in bash is quite easy
+
+case $class in
+	1)
+		type="Samurai"
+		hp=10
+		attack=20
+		;;
+The two semi colons denote the break statement.
+
+while [[ $x -le 100 ]]
+do
+	echo "Hey, I just did $x pushups"
+	(( x ++ ))
+done
+
+
+while [[ $x -le 100 ]]
+do
+	read -p "Pushup $x: Press enter to continue"
+	(( x ++ ))
+done
+
+while read -r line; do
+wcho "Line $x $line"
+(( x ++ ))
+done < hamlet
+
+This takes in a hamlet file and prints all the lines one by one
+
+for cups in 1 2 3 4 5 6 7 8 9 10;
+do
+  echo "Hey, you've had $cups cups of coffee today."
+done
+
+we can also use a range of number for for loop
+for cups in {1..10}:
+
+Now to check if a particular site is up
+for x in google.com bing.com facebook.com networkchuck.com;
+do
+	if ping -q -c 2 -W 1 $x > /dev/null; then
+		echo "$x is up"
+	else
+		echo "$x is down"
+	fi
+done
+
+for x in $(cat cities.txt);
+do
+	weather=$(curl -s http://wttr.in/$x?format=3)
+	echo "The weather for $weather"
+done
+
+break and continue works as usual in bash

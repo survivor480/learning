@@ -1,0 +1,49 @@
+apache-users 	It enumerates usernames on systems with the Apache UserDir module.
+Arachni 	It is used by the penetration testers and administrators to evaluate the security of web 
+            applications.
+BlindElephant 	It is a generic web application finger-printer.
+Burp Suite 	It is a platform for security testing f web applications.
+CutyCapt 	It is a utility to capture WebKit's rendering of a web page.
+DAVTest 	It is a testing tool for WebDAV servers that test servers by uploading test executable files.
+Deblaze 	It is a tool to perform testing against flash remoting endpoint.
+DIRB 	It is a web content scanner to check for existing web objects.
+DirBuster 	It is a web server directory brute-forcer.
+Fitmap 	It is used to find, prepare, audit, exploit, and even google automatically for local and remote 
+        file inclusion bugs in webapps.
+FunkLoad 	It is a functional and load web tester that launches a TCPWatch proxy and record activities over 
+            the network.
+Gobuster 	It is a tool for brute-force URIs and DNS subdomains.
+Grabber 	It is a web application scanner that scans for vulnerabilities in the application.
+hURL 	It is a hexadecimal and URL encoder and decoder.
+joomscan 	It is a vulnerability scanner project to detect Joomla CMS vulnerabilities and analyse them.
+jSQL Injection 	This tool is used to find the database information.
+Nikto 	It is an open source web server scanner used to run the comprehensive test against web servers for 
+        multiple items that includes a huge number of potentially dangerous files, run checks for outdated 
+        version over thousands of servers and also version specific problems
+PadBuster 	It automates the padding of Oracle attacks and has the ability to decrypt arbitrary cipher text, 
+            encrypt the arbitrary plaintext, and perform automated response analysis.
+Parso 	It is a web application proxy for accessing web application vulnerabilities.
+Parsero 	It is used to read the Robots.txt files of a web server and look at the banned entries. These 
+            entries tell the search engines what directories or files hosted on a web server mustn't be 
+            indexed.
+Plecost 	It is a tool to search and retrieve information about the plugins versions installed in WordPress systems.
+Powerfuzzer 	It is an automatic web fuzzer used for Cross Site Scripting.
+proxyStrike 	It is an active web application proxy tool designed to find vulnerabilities while browsing 
+                an application.
+Recon-ng 	It is a fully loaded web survey framework in which open source web-based reconnaissance can be 
+            conducted quickly and thoroughly.
+Skipfish 	It is a full automated and active web application security survey tool.
+Ua-tester 	It automatically checks a given URL using a list of standard and non-standard User Agent strings 
+            provided by the user.
+Uniscan 	It is a Remote File Include (RFI), Local file Include (LFI) and Remote Command Execution (RCE) 
+            vulnerability scanner.
+WebScarab 	It is a web application review tool
+Webshag 	It is a Multi-threaded web server audit tool that gathers commonly useful functionalities for 
+            web server auditing like website crawling, URL scanning, or file fuzzing.
+webSlayer 	It brute-force web applications and can be used for finding resources that are not linked.
+webSploit 	It is used for Social Engineering Works, Scan, Crawl and Analysis web, etc
+WhatWeb 	It recognises web technologies, including CMS of a website, blogging platform, web servers, etc. 
+            It also identifies version numbers, email addresses and more.
+WPScan 	It is a WordPress vulnerability scanner that can be used to scan remote WordPress installations.
+XSSer 	It is a framework to detect, exploit ad report XSS vulnerability in web-based applications.
+zaproxy 	It is a penetration testing tool for finding vulnerabilities in web applications.

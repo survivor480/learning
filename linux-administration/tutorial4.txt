@@ -1,0 +1,563 @@
+To view the file permissions, run the ls -l command.
+
+We get the output as such
+-rw-r--r--  1   root    root    2972    Aug 2   14:38   /etc/passwd
+The first triplet represents the owner permissions, the second triplet represents the group permissions,
+and the last triplet is everyone's permission.
+
+To remove the read permissions for the specific user, 
+chmod u-r users.txt
+To remove the write permission as well,
+chmod u-w users.txt
+
+Now, chmod 000 interfaces.txt actually removes the permissions for each one of them. It replaces all the
+permissions with dashes. But if we write with root, we are allowed to write with the help of root. If we try
+to read with root, we can read it.
+
+The file read and write permissions are only for non-privileged users.
+
+Changing File Permissions (chmod)
+
+chmod is the command used to change the permissions of a file or a directory using
+either the symbolic or the numeric notation.
+Only the root, or the file's owner, can change the file's permissions
+chmod who|[OPERATION][permissions] filename
+
+
+Changing File Permissions (chmod)
+
+chmod who|[OPERATION]Ipermissions] filename
+who signifies the user category whose permissions will be changed.
+u: the user that owns the file.
+g: the group that the file belongs to.
+o: the other users.
+The OPERATION flags define whether the permissions are to be removed, added, or set:
+a hyphen means remove the specified permissions.
++the plus sign means Add the specified permissions.
+equals means change the current permissions to the specified permissions.
+The permissions are specified using the letters r, w and x.
+
+
+To change the permissions for all the fields, we can execute the following command.
+
+chmod u-x, g+x, o-rwx user.txt
+
+To execute something that is valid for all ie users, groups and others as well, we can use
+the letter a.
+
+chmod a+r, a-wx, user.txt
+
+Another way to change the permissions is chmod ug=rw, o= user.txt 
+
+To have the same permissions as that of another file, we can run the following command,
+ls -l i.txt user.txt
+
+We can change the directory permissions as well. We will only be able to read the contents of the file in case we can only
+read it using the ls command.
+In case of directories, if the execute permission is not set, the write permission has no effect.
+
+The permissions of the parent directory are more important than that of the file.
+
+Changing the permissions of all the files in the directory to 640, the command for this is
+find ~ -type f -exec chmod 640 {} \;
+
+Changing the permissions of all the directories in a directory to 750, the command for this is
+find ~ -type d -exec chmod 750 {} \;
+
+lscpu lists all the information about the CPU.
+
+Changing the owner of the file, we can run sudo chown toor cpu.txt.
+
+To change the owner using the userid, sudo chown +1005 cpu.txt
+
+To change the group, we can use
+
+sudo chgrp :sudo cpu.txt
+
+Special Permissions - SUID (Set User D)
+
+Besides r, w and x for the owner, group and others there are 3 extra special permissions
+for each file or directory: SUID or Set User ID, SGID or Set Group ID and Sticky Bit.
+These special permissions are for a file or directory overall, not just for a user category.
+When an executable file with SUID is executed then the resulting process will have the
+permissions of the owner of the command, not the permissions of the user who
+executes the command.
+Setting SUID:
+Absolute Mode: chmod 4XXX file
+Relative Mode: chmod u+s file
+Is-I/usr/bin/passwd
+-rwsr-xr-x 1 root root 68208 apr 16 15:36 /usr/bin/passwd
+
+To add the suid permission, we can use sudo chmod u+s /usr/bin/cat
+
+To find the files or directories with a particular permission, we can use
+find /usr/bin/ -perm -4000
+
+
+Special Permissions - SGID (Set Group ID)
+
+SGID is set mainly to directories.
+If you set SGID on directories, all files or directories created inside that directory will be
+owned by the same group owner of the directory where SGID was configured.
+This is useful in creating shared directories, which are directories that are writable at
+the group level.
+Setting SGID:
+Absolute Mode: chmod 2XXX directory
+.Relative Mode: chmod g+s directory
+Is -Id /programming/
+drwxrws-2 pr1 programmers 4096 iul 14 13:15 /programming/
+
+
+We can change the owner and the group by the following command
+
+chown pr1:programmers /programming/
+
+To activate the SGID bit for the directories, 
+
+chmod 2770 /programming/
+
+This is how we activate the sgid bit.
+We can also acheive the same by
+chmod g+s /programming/
+
+Special Permissions The Sticky Bit
+
+The Sticky Bit is applied to directories.
+A user may only delete files that he owns or for which he has explicit write permission
+granted, even when he has write access to the directory.
+The sticky bit allows you to create a directory that everyone can use as a shared file
+storage. The files are protected because, no one can delete anyone else's files.
+Setting the sticky bit:
+Absolute Mode: chmod 1XXX directory
+Relative Mode: chmod ott directory
+Is -Id /temp/
+drwxrwxrwt 2 root root 4096 iul 14 13:45 /temp/
+
+
+To activate the sticky bit, we would have to prepend 1 to the already existing permissions.
+
+chmod 1777 /temp/
+chmod o+t /temp/
+
+If we attach the sticky bit, then another non-privileged user cannot delete the files in the ownership
+of another non-privileged user.
+
+It is considered that the default permissions for the file upon creation is 0666 for files and 0777 for directories.
+
+Executing umask command in the cli, we get the value as 0002.
+
+Now the default value for the permissions of the directory is 0777-0002=0775
+And the default value for permissions of the file is 0666-0002=0664
+
+We can change the desired value of umask by executing
+umask 0022
+
+If we use lsattr, we will notice that there are many dashes in the folders.
+The output can be as follows:
+--------------e-----    ./Desktop
+--------------e-----    ./Public
+--------------e-----    ./dir1
+--------------e-----    ./Documents
+...
+
+sudo chattr +a user.txt
+
+The +a means the append attribute is set.
+
+Now no one not even root can change the contents of the file.
+
+Another attribute is +A, which means no access time modification
+
+##########################
+## File Permissions
+##########################
+ 
+## LEGEND
+u = User
+g = Group
+o = Others/World
+a = all
+ 
+r = Read
+w = write
+x = execute
+- = no access
+ 
+# displaying the permissions (ls and stat)
+ls -l /etc/passwd
+    -rw-r--r-- 1 root root 2871 aug 22 14:43 /etc/passwd
+ 
+stat /etc/shadow
+    File: /etc/shadow
+    Size: 1721      	Blocks: 8          IO Block: 4096   regular file
+    Device: 805h/2053d	Inode: 524451      Links: 1
+    Access: (0640/-rw-r-----)  Uid: (    0/    root)   Gid: (   42/  shadow)
+    Access: 2020-08-24 11:31:49.506277118 +0300
+    Modify: 2020-08-22 14:43:36.326651384 +0300
+    Change: 2020-08-22 14:43:36.342652202 +0300
+    Birth: -
+ 
+# changing the permissions using the relative (symbolic) mode
+chmod u+r filename
+chmod u+r,g-wx,o-rwx filename
+chmod ug+rwx,o-wx filename
+chmod ugo+x filename
+chmod a+r,a-wx filename
+ 
+# changing the permissions using the absolute (octal) mode
+PERMISSIONS      EXAMPLE
+u   g   o
+rwx rwx rwx     chmod 777 filename
+rwx rwx r-x     chmod 775 filename
+rwx r-x r-x     chmod 755 filename
+rwx r-x ---     chmod 750 filename
+rw- rw- r--     chmod 664 filename
+rw- r-- r--     chmod 644 filename
+rw- r-- ---     chmod 640 filename
+ 
+# setting the permissions as of a reference file
+chmod --reference=file1 file2
+ 
+# changing permissions recursively
+chmod -R u+rw,o-rwx filename
+ 
+## SUID (Set User ID)
+ 
+# displaying the SUID permission
+ls -l /usr/bin/umount 
+    -rwsr-xr-x 1 root root 39144 apr  2 18:29 /usr/bin/umount
+ 
+stat /usr/bin/umount 
+    File: /usr/bin/umount
+    Size: 39144     	Blocks: 80         IO Block: 4096   regular file
+    Device: 805h/2053d	Inode: 918756      Links: 1
+    Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+    Access: 2020-08-22 14:35:46.763999798 +0300
+    Modify: 2020-04-02 18:29:40.000000000 +0300
+    Change: 2020-06-30 18:27:32.851134521 +0300
+    Birth: -
+ 
+# setting SUID
+chmod u+s executable_file
+chmod 4XXX executable_file      # => Ex: chmod 4755 script.sh
+ 
+ 
+## SGID (Set Group ID)
+ 
+# displaying the SGID permission
+ls -ld projects/
+    drwxr-s--- 2 student student 4096 aug 25 11:02 projects/
+ 
+stat projects/
+    File: projects/
+    Size: 4096      	Blocks: 8          IO Block: 4096   directory
+    Device: 805h/2053d	Inode: 266193      Links: 2
+    Access: (2750/drwxr-s---)  Uid: ( 1001/ student)   Gid: ( 1002/ student)
+    Access: 2020-08-25 11:02:15.013355559 +0300
+    Modify: 2020-08-25 11:02:15.013355559 +0300
+    Change: 2020-08-25 11:02:19.157290764 +0300
+    Birth: -
+ 
+# setting SGID
+chmod 2750 projects/
+chmod g+s projects/
+ 
+ 
+## The Sticky Bit 
+ 
+# displaying the sticky bit permission
+ls -ld /tmp/
+    drwxrwxrwt 20 root root 4096 aug 25 10:49 /tmp/
+ 
+stat /tmp/
+    File: /tmp/
+    Size: 4096      	Blocks: 8          IO Block: 4096   directory
+    Device: 805h/2053d	Inode: 786434      Links: 20
+    Access: (1777/drwxrwxrwt)  Uid: (    0/    root)   Gid: (    0/    root)
+    Access: 2020-08-22 14:46:03.259455125 +0300
+    Modify: 2020-08-25 10:49:53.756211470 +0300
+    Change: 2020-08-25 10:49:53.756211470 +0300
+    Birth: -
+ 
+# setting the sticky bit
+mkdir temp
+chmod 1777 temp/
+chmod o+t temp/
+ls -ld temp/
+    drwxrwxrwt 2 student student 4096 aug 25 11:04 temp/
+ 
+ 
+## UMASK
+# displaying the UMASK
+umask 
+ 
+# setting a new umask value
+umask new_value     # => Ex: umask 0022
+ 
+## Changing File Ownership (root only)
+ 
+# changing the owner
+chown new_owner file/directory      # => Ex: sudo chown john a.txt
+ 
+# changing the group owner
+chgrp new_group file/directory
+ 
+# changing both the owner and the group owner
+chown new_owner:new_group file/directory
+ 
+# changing recursively the owner or the group owner
+chown -R new-owner file/directory
+ 
+# displaying the file attributes
+lsattr filename
+ 
+#changing the file attributes
+chattr +-attribute filename     # => Ex: sudo chattr +i report.txt
+
+Q) The root user runs the following command: chattr +i users.txt
+Who will be able to remove or change the file?
+Answer: Nobody, not even root
+
+Processes 1
+A running instance of a program is called a process and it runs in its own memory
+space. Each time you execute a command, a new process starts.
+A process Is an active entity as opposed to a program, which is considered to be a
+passive entity.
+A new process is created only when running an executable file (not when running Shell
+builtin commands).
+Process properties:
+- PID (Process ID) - a unique positive integer number
+- User
+- Group
+- Priority/Nice
+
+If a shell built in file is created, there is no process created.
+Only executing an executable file, will lead to creation of a process.
+
+Processes 2
+
+Type of Processes:
+Parent
+Child
+Daemon
+.Zombie (defunct)
+Orphan
+
+There are quite a few commands for checking process: 
+ps 
+pgrep 
+pstree
+top
+
+These are the most common commands to check the processes. 
+
+ps -e displays all processes that are running.
+
+ps -f is for status information.
+
+ps -ef displays all processes with detailed information.
+
+Daemons are the processes that run in the background and are non-interactive.
+
+To sort the list of processes based on their memory usage, 
+ps aux --sort=%mem | less
+
+To sort in descending order,
+ps aux --sort=-%mem | less
+
+If we want to see the processes of a specific user, use the -u option
+ps -f -u student
+
+Now if we execute ps -ef | grep xyz123,
+there is a process created one of grep and other of ps, which then outputs us one,
+which may look strange at first but it is our process only.
+
+There is one command pgrep, which searches for the name of the process and then outputs the process id.
+
+pgrep -l sshd
+
+This displays both the process id as well as the name of the process.
+
+##########################
+## Process Viewing (ps, pstree, pgrep)
+##########################
+# checking if a command is shell built-in or executable file
+type rm        # => rm is /usr/bin/rm
+type cd        # => cd is a shell built-in
+ 
+# displaying all processes started in the current terminal
+ps
+ 
+# displaying all processes running in the system
+ps -ef 
+ps aux
+ps aux | less       # => piping to less
+ 
+# sorting by memory and piping to less
+ps aux --sort=%mem | less
+ 
+# ASCII art process tree
+ps -ef --forest
+ 
+# displaying all processes of a specific user
+ps -f -u username
+ 
+# checking if a process called sshd is running
+pgrep -l sshd
+ps -ef | grep sshd
+ 
+#displaying a hierarchical tree structure of all running processes
+pstree
+ 
+# prevent merging identical branches
+pstree -c
+
+To tweak the refresh rate of top, we can type d, then we can input values even less than 1.
+To see the jobs of a particular user, we can use the option u, where we can specify the user
+To tweak the fields, we can press the f key, wherein to select a particular field, we can type the
+space key and this selects the field.
+
+To move the field up or down, we can select the field using the right arrow key, and then move the field up or down, based on our preference.
+When done, we can press escape and then we can see that the changes are reflected.
+
+To write the configuration such that the next time we come across the same setting we had before, press w for write.
+
+top -d 1 -n 3 -b > top_processes.txt
+
+This writes 3 iterations of the command to the text file.
+
+##########################
+## Dynamic Real-Time View of Processes(top)
+##########################
+ 
+# starting top
+top
+ 
+## top shortcuts while it's running
+h       # => getting help
+space   # => manual refresh
+d       # => setting the refresh delay in seconds
+q       # => quitting top
+u       # => display processes of a user
+m       # => changing the display for the memory
+1       # => individual statistics for each CPU
+x/y     # => highlighting the running process and the sorting column
+b       # => toggle between bold and text highlighting
+<       # => move the sorting column to the left
+>       # => move the sorting column to the right
+F       # => entering the Field Management screen 
+W       # => saving top settings
+ 
+# running top in batch mode (3 refreshes, 1 second delay)
+top -d 1 -n 3 -b > top_processes.txt
+ 
+# Interactive process viewer (top alternative)
+sudo apt update && sudo apt install htop    # => Installing htop
+htop
+
+If we use the kill -l command, it lists the different types of kill commands, that exist in linux
+To get the process id of a specific process, we can use the pgrep command,
+
+To send an interrupt signal, -2 is for SIGINT command to the process.
+
+To kill the process with the interrupt, we can use the kill -2 14804
+
+Another way of getting all the process ids of the processes is using the pidof command
+pidof firefox
+
+Output is somewhat 15029 14977 14960 14924 14871
+
+To kill the process with multiple pids, we can use the same command
+kill -INT 15029 14977 14960 14924 14871
+
+We can also use the -INT command instead of the -2 option
+
+To avoid always copying the process ids of the processes, we can use the following use case
+kill -SIGINT $(pidof firefox)
+
+Another useful process the is the HUP which is used to reload a process.
+
+We can reload the process by sudo kill -1 701
+
+If we pass in the term signal, there are three things that can take place:
+1) Process stops immediately
+2) Process stops with a little bit delay
+3) Process works indefinitely and ignores the term signal.
+
+The process can choose what to make out of the term signal
+
+sleep delays the execution for a certain amount of time.
+
+We can use the sleep command as
+sleep 311&
+
+We can then see all the sleep process by pgrep -l sleep
+
+killall -15 sleep
+
+The -15 is the option for terminate command
+
+pkill slee
+The pkill command can run by partial names as well.
+
+We can add a background job by adding an ampersand at the end.
+
+sleep 20 &
+
+When the process is running in the background, we dont have to wait for the process to end at all 
+to execute another one.
+
+nohub ifconfig &
+
+This executes the command in the background and then writes its output in the nohup.out
+
+##########################
+## Killing processes (kill, pkill, killall)
+##########################
+ 
+# listing all signals
+kill -l
+ 
+# sending a signal (default SIGTERM - 15) to a process by pid 
+kill pid        # => Ex: kill 12547
+ 
+# sending a signal to more processes
+kill -SIGNAL pid1 pid2 pid3 ...
+ 
+# sending a specific signal (SIGHUP - 1) to a process by pid
+kill -1 pid
+kill -HUP pid
+kill -SIGHUP pid
+ 
+# sending a signal (default SIGTERM - 15) to process by process name
+pkill process_name          # => Ex: pkill sleep
+killall process_name
+kill $(pidof process_name)  # => Ex: kill -HUP $(pidof sshd)
+ 
+# running a process in the background
+command &   # => Ex: sleep 100 &
+ 
+# Showing running jobs
+jobs
+ 
+# Stopping (pausing) the running process
+Ctrl + Z
+ 
+# resuming and bringing to the foreground a process by job_d
+fg %job_id
+ 
+# resuming in the background a process by job_d
+bg %job_id
+ 
+# starting a process immune to SIGHUP
+nohup command &     # => Ex: nohup wget http://site.com &
+
+Q) A user is running the ls command. What is the parent of the process?
+Answer: The Shell
+
+Q) How can you run a command to be sure that it doesn't get terminated when closing the terminal?
+Answer: Prefix the command with nohup
+
+
+
+

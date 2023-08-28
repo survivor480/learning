@@ -1,0 +1,570 @@
+file /etc/
+
+This command returns the output as directory
+
+file /etc/passwd
+
+This command returns the output as ASCII text.
+
+file /usr/bin/ls
+
+This returns the output as ELF 64-bit LSB shared object
+
+ls -F /usr/bin/ls
+
+This puts a star to the end of this directory
+
+##########################
+## File Timestamps and Date
+##########################
+    
+# displaying atime
+ls -lu
+    
+# displaying mtime
+ls -l
+ls -lt
+    
+# displaying ctime
+ls -lc
+    
+# displaying all timestamps
+stat file.txt
+    
+# displaying the full timestamp
+ls -l --full-time /etc/
+    
+# creating an empty file if it does not exist, update the timestamps if the file exists
+touch file.txt
+    
+# changing only the access time to current time
+touch -a file
+    
+# changing only the modification time to current time
+touch -m file
+    
+# changing the modification time to a specific date and time
+touch -m -t 201812301530.45 a.txt
+    
+# changing both atime and mtime to a specific date and time
+touch -d "2010-10-31 15:45:30" a.txt
+    
+# changing the timestamp of a.txt to those of b.txt
+touch a.txt -r b.txt
+    
+# displaying the date and time
+date
+    
+# showing this month's calendar
+cal
+    
+# showing the calendar of a specific year
+cal 2021
+    
+# showing the calendar of a specific month and year
+cal 7 2021
+    
+# showing the calendar of previous, current and next month
+cal -3
+    
+# setting the date and time
+date --set="2 OCT 2020 18:00:00"
+    
+# displaying the modification time and sorting the output by name.
+ls -l
+    
+# displaying the output sorted by modification time, newest files first
+ls -lt
+    
+# displaying and sorting by atime
+ls -ltu
+    
+# reversing the sorting order
+ls -ltu --reverse
+
+
+What ls option is used to display the hidden files as well?
+
+-a
+
+You want to see the permissions and other information about the /etc directory.
+
+What command would you run?
+
+ls -ld /etc
+
+Using cat we can also view two files by passing two arguments
+
+cat is short for concatenating two files
+
+cat /etc/hosts /etc/host.conf > my_host.txt
+
+more and less are used for paging large files
+
+less linux.txt
+
+Type Ctrl + F to move to the next page
+
+Navigate through the file using arrow keys
+
+Ctrl + B for backwards screen
+
+To navigate to the very beginning of the file, type lower case g and for the end of the file type upper case G
+
+To search for any keywords in the less page, we can just type /keyword. Any matches will be highlighted
+
+If we are at the end of the file and want to search backwards, we use a ?keyword.
+
+Type n to go from a match to match
+
+tail /etc/passwd
+
+By default tail shows the last 10 lines
+
+head is used to show the beginning 10 lines of a file
+
+watch -n 3 -d ls -l
+
+    ##########################
+    ## Viewing files (cat, less, more, head, tail, watch)
+    ##########################
+     
+    # displaying the contents of a file
+    cat filename
+     
+    # displaying more files
+    cat filename1 filename2
+     
+    # displaying the line numbers
+    can -n filename
+     
+    # concatenating 2 files
+    cat filename1 filename2 > filename3
+     
+    # viewing a file using less
+    less filename
+     
+    # less shortcuts:
+    # h         => getting help
+    # q         => quit
+    # enter     => show next line
+    # space     => show next screen
+    # /string   => search forward for a string
+    # ?string   => search backwards for a string
+    # n / N     => next/previous appearance
+     
+     
+    # showing the last 10 lines of a file
+    tail filename
+     
+    # showing the last 15 lines of a file
+    tail -n 15 filename
+     
+    # showing the last lines of a file starting with line no. 5
+    tail -n +5 filename
+     
+    # showing the last 10 lines of the file in real-time
+    tail -f filename
+     
+     
+    # showing the first 10 lines of a file
+    head filename
+     
+    # showing the first 15 lines of a file
+    head -n 15 filename
+     
+    # running repeatedly a command with refresh of 3 seconds
+    watch -n 3 ls -l
+
+
+If we execute the mkdir -p first/second/third then it creates the parent directories as required
+
+cp /etc/passwd ./users.txt
+
+This copies the contents of the first mentioned file to the second mentioned file
+
+cp -v /etc/group ./users.txt
+
+The v stands for verbose here. It displays the output as '/etc/group' -> './users.txt'
+
+Now if we want it to prompt before overwriting, what we can do is
+
+cp -i /etc/group ./users.txt
+
+This will display a prompt before overwriting the contents to the file
+
+cp learning_linux.txt logs users.txt first/
+
+This will copy the three files to the destination directory
+
+sudo cp -r /etc/ ~/Desktop
+
+This recursively iterates through the directly and copies all the folders and files to the destination
+This command wont work in case we remove the recursive option
+
+mv c.txt dir1/a.txt dir1/b.txt dir1/dir2/
+
+Moves all the mentioned files to the destination
+
+mv dir1/dir2/*.txt dir1/
+
+This moves all the files with the extension of .txt to the mentioned directory
+
+For generating a prompt for overwriting a file, we can use -i option
+
+mv -i dir1/dir2/a.txt dir1/
+
+To rename a file then, this is the procedure to be followed,
+
+mv dir1/a.txt dir1/abc.txt
+
+This renames the file from a.txt to abc.txt
+
+A directory can also be renamed in the same way
+
+To rename the file and then move it, there is a special way
+
+mv dir10/c.txt dir10/dir2/cc.txt
+
+This moves the files into the destination with the name cc.txt
+
+There is no concept of trash or Recycle bin for files which are deleted from the cli.
+
+rm -i dir10/dir2/b.txt
+
+This generates a prompt which upon given consent, deletes the files
+
+To delete a directory, use
+
+rm -r dir10
+
+Now if we create a file like sudo touch a.txt, this file will belong to root but the user
+student is allowed to delete it, (student in this example) since the file will be present in the
+home directory of the user
+
+To force removal and not receive a prompt for each file, we can use the -f option.
+
+rm -rf Music/ Pictures/
+
+echo *.txt
+
+This prints the files that will match the given pattern.
+
+To safely delete a file, we can use the shred command to write the file with random contents before completely
+removing it
+
+shred -vu -n 100 passwd
+
+
+##########################
+## Working with files and directory (touch, mkdir, cp, mv, rm, shred)
+##########################
+ 
+# creating a new file or updating the timestamps if the file already exists
+touch filename
+ 
+# creating a new directory
+mkdir dir1
+ 
+# creating a directory and its parents as well
+mkdir -p mydir1/mydir2/mydir3
+ 
+######################
+### The cp command ###
+######################
+# copying file1 to file2 in the current directory
+cp file1 file2
+ 
+# copying file1 to dir1 as another name (file2)
+cp file1 dir1/file2
+ 
+# copying a file prompting the user if it overwrites the destination
+cp -i file1 file2
+ 
+# preserving the file permissions, group and ownership when copying
+cp -p file1 file2
+ 
+# being verbose
+cp -v file1 file2
+ 
+# recursively copying dir1 to dir2 in the current directory
+cp -r dir1 dir2/
+ 
+# copy more source files and directories to a destination directory
+cp -r file1 file2 dir1 dir2 destination_directory/
+ 
+ 
+######################
+### The mv command ###
+######################
+# renaming file1 to file2
+mv file1 file2
+ 
+# moving file1 to dir1 
+mv file1 dir1/
+ 
+# moving a file prompting the user if it overwrites the destination file
+mv -i file1 dir1/
+ 
+# preventing a existing file from being overwritten
+mv -n file1 dir1/
+ 
+# moving only if the source file is newer than the destination file or when the destination file is missing
+mv -u file1 dir1/
+ 
+# moving file1 to dir1 as file2
+mv file1 dir1/file2
+ 
+# moving more source files and directories to a destination directory
+mv file1 file2 dir1/ dir2/ destination_directory/
+ 
+######################
+### The rm command ###
+######################
+# removing a file
+rm file1
+ 
+# being verbose when removing a file
+rm -v file1
+ 
+# removing a directory
+rm -r dir1/
+ 
+# removing a directory without prompting
+rm -rf dir1/
+ 
+# removing a file and a directory prompting the user for confirmation
+rm -ri fil1 dir1/
+ 
+# secure removal of a file (verbose with 100 rounds of overwriting)
+shred -vu -n 100 file1
+
+
+Q) mkdir ubuntu/centos
+mkdir: cannot create directory 'ubuntu/centos': No such file or directory
+
+Why did the user get that error?
+
+Answer: Because neither of the directories exist. Add the -p option.
+
+Every linux command or program that we run has three data streams connected to it:
+
+stdin(0):- Standard Input
+stdout(1):- Standard Output
+stderr(2): Standard Error
+
+Now we can connect two commands with each other. If we wish to see all the files in the given directory,
+according to their size, that list may be huge and we may not be able to see it.
+So to see only the head of the output,
+
+ls -lSh /etc/ | head
+
+This gives us only the starting lines of the command.
+
+Now we can pipe any number of commands at once.
+
+ls -lSh /etc/ | head -n 20 | tail -n 1
+
+This command displays only the 20th line of the command.
+
+Now if we want to see how many authentication errors took place, there is no such command to come across but we can make one such work for us.
+
+First we display all the authentication logs, which is cat /var/log/auth.log
+In the cat command, we can add the option -n to see the file along with the line numbers
+
+Now, we try to count the number of authentication failures, we can use the grep command to fetch that.
+Grep command actually finds the string and displays it.
+
+cat -n /var/log/auth.log | grep -a "authentication failure"
+
+Now, there is another command wc which returns how many lines are displayed
+
+cat -n /var/log/auth.log | grep -a "authentication failure" | wc -l
+
+This displays the output as a number(6 in this case). wc is short for word count.
+
+The wc command provides different statistics about a file, it shows the number of lines, number of words and number of characters that are present in the
+file.
+
+wc /etc/passwd
+This gives the result as 48 83 2825 /etc/passwd
+
+-l will display the line count in wc
+-w will display the word count in wc
+-c will display the character count in wc
+
+Command redirection is done by > sign.
+
+ls -l > ls.txt will write the output of the ls -l command to the ls.txt file
+
+In case of command redirection, it will create the file if it already exists then it will overwrite the file
+
+To append to the file, we can use the >> sign
+
+ls -l > output.txt
+
+ifconfig >> output.txt
+
+>> creates the file if it doesnot exist, or appends to the file in case it exists.
+
+Everything is file in linux. To demonstrate it, we open the file responsible for the terminal.
+
+For this we use the tty command,
+The output for this is /dev/pts/1
+
+Now we can use the second terminal to display output in the first terminal
+
+ifconfig > /dev/pts/0
+
+This displays the output of the terminal in the previous terminal.
+
+Now to display the error interface in the file we can use
+
+tail -n 3 /etc/shadow 2> error.txt
+
+This displays the error in the txt file. Note that 2 > is not allowed, 2> is the original syntax.
+
+It is possible to redirect the error of a command in some file and the normal output in another file.
+
+For example: tail -n 2 /etc/passwd /etc/shadow
+
+This generates an error in case of the shadow file, since we dont have the required privileges.
+
+So to redirect the output, all we have to do is,
+
+tail -n 3 /etc/passwd /etc/shadow > output.txt 2> error.txt
+
+TO redirect the standard output as well as the standard error in one file, we can execute the following command
+
+tail -n 2 /etc/passwd /etc/shadow > output.txt 2>&1
+
+This writes the standard output as well as the standard error inside the file
+
+To get the mac_id of the ethernet connection, what we can do is execute the following command
+
+ifconfig | grep ether | cut -d" " -f10 > mac.txt
+
+This shows the mac address of the ethernet port of that device
+
+cut -d":" -f1 /etc/passwd
+This shows all the users in the file passwd.
+The f1 here is the label of the delimiter in each line.
+
+Now what if we want to create a file and write all the output into it, as well as print the output to the screen.
+
+To get the running kernel version of the distribution, we can write
+
+uname -r
+
+
+##########################
+## Piping and Command Redirection
+##########################
+ 
+## Piping Examples:
+ 
+ls -lSh /etc/ | head            # see the first 10 files by size
+ps -ef | grep sshd              # checking if sshd is running
+ps aux --sort=-%mem | head -n 3  # showing the first 3 process by memory consumption
+ 
+## Command Redirection
+ 
+# output redirection
+ps aux > running_processes.txt
+who -H > loggedin_users.txt
+ 
+# appending to a file
+id >> loggedin_users.txt
+ 
+# output and error redirection
+tail -n 10 /var/log/*.log > output.txt 2> errors.txt
+ 
+# redirecting both the output and errors to the same file
+tail -n 2 /etc/passwd /etc/shadow > output_errors.txt 2>&1
+ 
+cat -n /var/log/auth.log | grep -ai "authentication failure" | wc -l
+cat -n /var/log/auth.log | grep -ai "authentication failure" > auth.txt     # => piping and redirection
+
+
+We need to install the locate command by using
+
+sudo apt-get install mlocate
+
+We update the database used by locate by the command sudo updatedb
+
+ls /var/lib/mlocate
+locate -S
+
+The basic usage of the command is to locate the name of the file or directory we want to find
+
+locate passwords
+
+By default the locate command will replace it like *eahorse* in the command locate eahorse
+
+Adding -b option suggests it to find the string only in the basename rather than the entire string
+
+Now to find out the exact file with that exact name, we can use a backslash
+
+locate -b '\shadow'
+
+This will search all the files with the name shadow
+
+Now if we create a file and then try to locate just after that, it wont be able to locate that file since,
+the database which is used while searching the files is not updated yet.
+
+Hence sudo updatedb, then try locating the file
+
+Now the problem is that if we remove the file, even after that locate suggests the file to be there.
+
+To avoid this there is an option provided, which is -e which checks for the existence of the file, if it really exists.
+
+linux is a case sensitive operating system and locate command is no different. But using the -i option,
+locate -i Rainshadow
+we can find a few files
+
+Now, we can also locate a file using regular expressions,
+locate -b -r '^shadow\.[0-9]'
+This command is to find the files which start with shadow, then followed by a dot, and then any number
+
+Using the which command, it displays the first executable it finds regarding the command
+which rm
+has an output of /usr/bin/rm
+
+If we want to view all matching executables, we can use the -a command
+
+##########################
+## Finding Files (find, locate)
+##########################
+ 
+## LOCATE ##
+# updating the locate db
+sudo updatedb
+ 
+# displaying statistics
+locate -S
+ 
+# finding file by name
+locate filename # => filename is expanded to *filename*
+locate -i filename # => the filename is case insensitive
+locate -b '\filename' # => finding by exact name
+ 
+# finding using the basename
+locate -b filename
+ 
+# finding using regular expressions
+locate -r 'regex'
+ 
+# checking that the file exists
+locate -e filename
+ 
+# showing command path
+which command
+which -a command
+
+
+
+
+
+
+
+

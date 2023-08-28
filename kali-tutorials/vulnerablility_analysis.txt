@@ -1,0 +1,74 @@
+BBQSQL - It is a SQL injection exploitation tool useful when attacking tricky SQL injection vulnerabilities.
+         It eases the triggering of hard to trigger SQL injection findings.
+
+BED - It stands for Brute-force Exploit Detector. It is a network protocol fuzzer that checks daemons for 
+      potential buffer overflow.
+
+Cisco-auditing-tool - It checks cisco routers for common vulnerabilities.
+
+Cisco-global-exploiter - It is an advanced, simple, and fast security testing tool.
+
+Cisco-ocs - It exploits Cisco devices in the given IP range.
+
+Cisco-torch - It is Cisco device scanning, fingerprinting, and exploitation tool that is used when we need 
+                to discover remote Cisco host, which is running Telnet, SSH, Web, NTP, and SNMP services 
+                and launch a dictionary attack against the service discovered.
+
+Copy-router-config - This tool is used to copy the configuration file from Cisco Devices via SNMP to the server.
+
+Doona - It is a network fuzzer extracted from Brute-force Exploit Detector.
+
+DotDotPwn - It is a fuzzer used to discover traversal directory vulnerabilities in the software of HTTP/FTP/TFTP 
+            servers.
+
+HexorBase - This tool is used for administrating and auditing multiple database servers simultaneously form a 
+            centralized location, and it is used to perform SQL queries and brute-force attacks against 
+            common database servers.
+
+jSQL - Injection This tool is used to find database information from a distant server.
+
+Lynis - It is an open source security auditing tool used to audit and harden Unix and Linux based systems.
+
+Nmap - This utility is used for network discovery and security auditing. It uses raw IP packets in simple ways to 
+        determine what hosts are available on the network.
+
+Ohrwurn - It is an RTP fuzzer that reads SIP messages to get information about the RTP port numbers.
+
+openvas - It is a framework that offers a comprehensive and powerful vulnerability scanning and management 
+            solution.
+
+Oscanner - It is an Oracle assessment framework used for Sid Enumeration, Passwords tests, Enumerate 
+            database links, etc
+
+Powerfuzzer - It is a highly automated and fully customizable web fuzzer used for Cross Site Scripting, 
+                Injections, CRLF, and HTTP 500 statuses.
+
+Sfuzz - It is a Black Box testing utilities used to create test cases. 
+
+SidGuesser - It guesses sids or instance against an Oracle database according to a predefined dictionary file.
+
+SIPArmyKnife -  It is a fuzzer that searches for cross site scripting, SQL injection, log injection, 
+                format strings, buffer overflow, etc..
+
+Sqlmap - Sqlmap is a pen-testing tool that automates the process of detecting and exploiting of SQL injection 
+        drawbacks and taking over of database servers.
+
+Sqlninja - It is a tool to exploit SQL injection vulnerabilities on a web application. It also provides remote 
+            access to the vulnerable DB server.
+
+Sqlsus - It is a MySQL injection and takeover tool used to retrieve the database structure, injecting your own 
+        SQL queries, downloading files from the web server, crawl the website for writable directories using 
+        command line interface.
+
+THC-IPV6 - It is a set of tools to attack the inherent weakness of IPV6 and ICMP6. It converts a MAC or IPv4 
+            address to an IPv6 address.
+
+Tnscmd10g -  It is a tool to communicate with the Oracle TNS listener on port 1521/tcp on a simple level, 
+            such as sending ping commands.
+
+Unix-privesc-check - It is used to find misconfigurations that could allow local, unprivileged users to 
+                    escalate privileges to other users.
+
+Yersinia - It is a framework for performing layer 2 attacks. It takes advantages of the weakness in the 
+            protocol.
+
