@@ -1,0 +1,419 @@
+For anacron,
+
+2   1   backup date >> tmp/anacron.txt
+
+To check the error with anacron, we can simply type
+anacron -T 
+This command will simply return the error to me
+
+if we run the mount command, it will display all currently attached file systems
+The output will be very large since it includes virtual file systems. 
+
+
+Now in case we want to list all ext4 file systems, we can do
+
+mount -l -t ext4 
+
+To view only fat32 partitions, we can use 
+
+mount -l -t vfat
+
+To view the contents of a usb stick in linux, we can run mount and then see which one
+is linked to the media folder
+
+ls -l /media/student/0CB3-FE94/
+
+To list the details of disks, we can use 
+sudo fdisk -l
+
+We can also find the name of the device using dmesg and lsblk commands.
+
+However some file systems are not automatically detected, so we can use the -t option
+to explicitly mention the type we are looking for
+
+sudo mount -t vfat /dev/sdb /home/student/Desktop/usb/
+
+To unmount, we can use the umount command
+
+sudo umount /home/student/Desktop/usb
+
+To unmount a busy file system, we can use the lazy unmount option by using the -l option
+sudo umount -l /home/student/Desktop/usb
+
+To comfigure a mount point as read only we can use the -o option
+
+sudo umount -o ro /dev/sdb /home/student/Desktop/usb/
+
+In case we want to remount it with a different set of options, we can run the following
+sudo mount t-o rw,remount /dev/sdb /home/student/Desktop/usb 
+
+To copy a file to another or taking backups, we can use the following command,
+
+dd if=/dev/sdb of=/home/student/backup-usb.img status=progress
+
+To copy everything using synchronised input output, we can use
+
+dd if=/dev/sdb of=/home/student/backup-usb.img status=progress conv=sync
+
+To extract detailed information about the computer hardware, we can use
+
+lshw
+
+To get the value in json format, we can use 
+
+lshw -json
+
+To view the output in html format, we can use
+
+lshw -html
+
+In case we are interested in only a short summary of the hardware configuration, 
+we can use 
+
+lshw -short
+
+Another command which displays information about hardware configuration is
+
+inxi -F
+
+The inxi command is not available in all linux distributions.
+
+To view the information about the cpu of the system, we can write
+
+lscpu
+
+To get the information about the memory of the computer, we can use
+
+dmidecode -t memory
+
+To view only the size of the memory sticks, we can pipe it with grep -i size
+
+To view information about sata controllers, graphics cards and other devices, we can use
+
+lspci
+
+To view the vga controllers, we can use
+
+lspci | grep -i vga
+
+To view detailed information about each USB port, we can use
+
+lsusb -v
+
+To view information about the hard disks, we can use
+
+lshw -C disk
+
+To view the summary of different disks, we can use
+
+lshw -C disk -short
+
+To view information about a particular disk drive we can use,
+
+fdisk -l /dev/sda 
+
+To view the details about specific sata drives, we can use
+
+hdparm -i /dev/sda
+
+The hdparm command can also be used to benchmark the hard disk in linux,
+
+To check the read write speed of the disk, we can run
+
+hdparm -t --direct /dev/sda
+
+To show information about wireless devices, we can use
+
+iw list
+
+To get the battery information and its current health and all that details, we need to install acpi
+
+acpi -bi
+
+To view all the details, we can run
+
+acpi -V
+
+##########################
+## Getting System Hardware Information
+##########################
+ 
+# displaying full hardware information
+lshw
+lshw -short     # => short format
+lshw -json      # => json format
+lshw -html      # => html format
+ 
+inxi -Fx
+# displaying info about the CPU
+lscpu
+lshw -C cpu
+lscpu -J    => json format
+ 
+# displaying info about the installed RAM memory
+dmidecode -t memory 
+dmidecode -t memory | grep -i size
+dmidecode -t memory | grep -i max
+ 
+# displaying info about free/used memory
+free -m
+ 
+# getting info about pci buses and about the devices connected to them
+lspci
+lspci | grep -i wireless
+lspci | grep -i vga
+ 
+# getting info about USB controllers and about devices connected
+lsusb
+lsusb -v
+ 
+# getting info about hard disks
+lshw -short -C disk
+fdisk -l
+fdisk -l /dev/sda
+lsblk
+hdparm -i /dev/sda
+hdparm -I /dev/sda
+ 
+# benchmarking disk read performance
+hdparm -tT --direct /dev/sda
+ 
+# getting info about WiFi cards and networks
+lshw -C network
+iw list
+iwconfig
+iwlist wlo1 scan
+ 
+# Getting hardware information from the /proc virtual fs
+cat /proc/cpuinfo
+/proc/partitions
+cat /proc/meminfo
+cat /proc/version
+uname -r    # => kernel version
+uname -a
+ 
+acpi -bi    # battery information
+acpi -V
+ 
+## Working directly with device files (dd)
+ 
+# backing up the MBR (the first sector of /dev/sda)
+dd if=/dev/sda of=~/mbr.dat bs=512 count=1
+ 
+# restoring the MBR
+dd if=~/mbr.dat of=/dev/sda bs=512 count=1
+ 
+# cloning a partition (sda1 to sdb2)
+dd if=/dev/sda1 of=/dev/sdb2 bs=4M status=progress
+
+We can create bootables drives using dd command
+
+Systemd vs SysVInit
+
+Most modern Linux distributions are using SystemD as the default init system and'
+service manager
+
+It replaced the old SysVInit script system, but it's backward compatible with SysVInit.
+
+systemd starts with PID 1 as the first process, then takes over and continues to mount the host's
+file systems and starts services
+
+systemd starts the services in parallel.
+
+In systemctl, we can use the systemctl reload-or-restart nginx command, to let the system decide which
+is better
+
+To disable services for boot time, we can use
+
+systemctl is-enabled nginx
+
+If in case it is enabled, we can disable it using
+
+systemctl disable nginx
+
+To prevent a service from being started automatically or manually, we can mask it
+
+systemctl mask nginx
+
+The system has marked the service as completely unstartable by linking it to /dev/null
+
+To unmask a service, we can use
+
+systemctl unmask nginx
+
+To view the units that systemd has loaded, we can use the following command
+
+systemctl list-units
+
+To list the inactive ones as well, 
+
+systemctl list-units --all
+
+##########################
+## Service Management using systemd and systemctl
+##########################
+# showing info about the boot process
+systemd-analyze
+systemd-analyze blame
+ 
+# listing all active units systemd knows about
+systemctl list-units
+systemctl list-units | grep ssh
+ 
+# checking the status of a service
+sudo systemctl status nginx.service
+ 
+# stopping a service
+sudo systemctl stop nginx
+ 
+# starting a service
+sudo systemctl start nginx
+ 
+# restarting a service
+sudo systemctl restart nginx
+ 
+# reloading the configuration of a service
+sudo systemctl reload nginx
+sudo systemctl reload-or-restart nginx
+ 
+# enabling to start at boot time
+sudo systemctl enable nginx
+ 
+# disabling at boot time
+sudo systemctl disable nginx
+ 
+# checking if it starts automatically at boot time
+sudo systemctl is-enabled nginx
+ 
+# masking a service (stopping and disabling it)
+sudo systemctl mask nginx
+ 
+# unmasking a service
+sudo systemctl unmask nginx
+
+Installing ShellGPT
+
+Setting up a server using apache 2 and also having a domain name
+
+The freenom.com and dot.tk provide free domains linked to some different countries.
+
+Installing Bind 9 DNS server utility in the VPS.
+
+DNS Queries
+
+1) Recursive
+   A recursive query is a kind of query, in which the DNS server, that received
+   your query, will do all the job, fetching the answer, and giving it back to you. In the end, you'll get
+   the final answer.
+
+2) Iterative
+   The DNS name server will not go and fetch the complete answer for your query but will give back
+   a referral to other DNS servers, which might have the answer. Now it's your job to query those servers and
+   find the answer.
+
+DNS forwarder
+
+A forwarder is another DNS server that will be queried recursively by our server.
+
+A DNs server, configured to use a forwarder, behaves as follows:
+1) When the DNS server receives a query, it attempts to resolve this query.
+2) If the query cannot be resovled using local data, the DNs server forwards the query
+recursively to the DNs server that is designated as a forwarder.
+3) It the forwarder is not available, the DNS server attempts to resolve the
+query by itself, using iterative queries.
+
+NMAP
+
+NMAP is a network discovery and security auditing tool.
+
+TCP Scans:
+    SYN scan: -sS (root only)
+    Connect Scan: sT
+
+UDP Scan: -sU 
+ICMP Scan: -sn or -sP
+
+We can run to scan which ports are open for a particular machine by doing
+
+nmap 192.168.0.20
+
+To view specific ports, we can use
+
+nmap -p 20,22,80,50005 192.168.0.20
+
+Running the above command will not show many service names that might be running on those ports,
+
+nmap -p 80,50005 -sV 192.168.0.20
+
+The above command solves the problem
+
+To scan all ports including the non-standard ports,
+
+nmap -p- 192.168.0.20
+
+To view the devices connected to a particular interface on a machine,
+
+arp-scan -I enp0s3 -l 
+
+The arp scan is very noisy, an admin or an intrusion detection system will detect it easily.
+
+Instead we can use,
+
+netdiscover
+
+To scan a particular interface we can use
+
+netdiscover -i enp0s3 
+
+To scan a particular range, we can apply the following
+
+netdiscover -i enp0s3 -r 192.168.0.0/24
+
+If we add the -p option to the above command, it indicates that netdiscover is running in passive mode.
+Which means that it will only sniff the network.
+
+Google Dorks
+
+Wireshark
+
+tcpdump
+
+IPFS - The InterPlanetary File System
+
+InterPlanetary File system(IFPS) is a protocol designed to create a permanent and
+decentralized method of storing and sharing files.
+IFPS aims to replace HTTP and build a better web.
+
+IFPS Properties:
+1) IFPS is a peer-to-peer, decentralized, and distributed file system.
+2) IPFS is a CDN.
+3) IPFS is also fault-tolerant with zero downtime.
+4) IPFS is censorship-resistant
+5) IPFS uses content address (not location addressing like HTTP)
+
+
+Content Addressing vs. Location Addressing
+
+Location Addressing: 
+
+Contents is accessed by location (https://www.servername.com/file.pdf);
+Whoever controls that location controls the content.
+
+Content Addressing
+
+Files are'nt anymore accessed based on "where they are", but based on "what they are".
+There is no location of the files, no one controls the files.
+
+Pinning is the mechanism that allows you to tell IFPS to always keep a given object and
+never remove it.
+
+IPFS
+
+Linux firewall
+
+
+
+
+
+
+

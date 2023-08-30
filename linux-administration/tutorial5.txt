@@ -523,6 +523,263 @@ nmap -p 80 -iL hosts.txt
 nmap -n -iL hosts.txt -p 80 -oN output.txt
 
 
+To view the contents of the file, we can view it with the archive manager
+We can view the entire contents of the deb file using the archive manager,
+
+The dpkg database contains the list of all the installed software on the current system.
+It is not responsible to solve any dependencies.
+Note that tools like apt will call dpkg behind the scenes since they are based on dpkg
+
+To see info about the deb file, we can use 
+dpkg --info google-chrome-stable_current_amd64.deb
+
+To install the deb file, we can run the following command
+
+dpkg -i google-chrome-stable_current_amd64.deb
+
+To view all the installed programs,
+dpkg --get-selections
+
+dpkg-query -l
+
+The ii in the output indicated the status which is install and the second is installed
+
+To list all the files installed related to a particular package, run 
+
+dpkg -l google-chrome-stable 
+
+Suppose a file got corrupted and we want to know which package the file belongs to
+Example, the ls package got corrupted, we can view the files of ls command by using
+which -a ls
+
+Now we want to see to which package it belongs to,
+we can use dpkg -S /bin/ls
+
+To remove a package we can use,
+dpkg -r google-chrome-stable
+
+The -r option does not remove the configuration files, so we can use the -P option to remove the configuration files as well
+
+APT- Advanced Package Tool 
+
+The recommended way to manage software packages on Ubuntu and other Debian based distributions is using apt
+In the newest versions of Ubuntu the apt-get and apt-cache tools were merged into a single command simply called apt.
+Unlike dpkg, apt does not understand .deb files. It works with packages that are downloaded from repositories and calls
+dpkg directly after downloading the .deb archives.
+An APt repositories is a web server which contains a collection of packages with metadata that is readable by apt tool.
+A special kind of repository hosted on servers like Launchpad are PPAs.
+
+The full form of PPA is Personal Package archives
+
+To upgrade the entire system, we can use sudo apt full-upgrade
+
+ls -l /var/cache/apt/archives/
+
+This is the directory that contains all installed and upgraded packages.
+
+To clean the local directories to keep the machine clean, we can run
+apt clean
+
+To find the list of all the packages that can be installed we can run
+apt list
+
+apt list | grep postfix
+
+To find a particular package in the repositories
+
+To find a package related to a particular phrase, we can Use
+
+apt search "transparent proxy"
+
+To see the number of installed packages we can use
+apt list --installed | wc -l
+
+To view the details of a particular packages, we can Use
+
+apt show apache2
+
+There are also some of the graphical package managers, like synaptic
+
+##########################
+## Software Management (dpkg and apt)
+##########################
+ 
+### DPKG ###
+# getting info about a deb file
+dpkg --info google-chrome-stable_current_amd64.deb
+ 
+# installing an application from a deb file
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+ 
+# list all installed programs
+dpkg --get-selections
+dpkg-query -l
+ 
+# filtering the output
+dpkg-query -l | grep ssh
+ 
+# listing all files of an installed package
+dpkg-query -l | grep ssh
+dpkg -L openssh-server
+ 
+# finding to which package a file belongs 
+which ls
+dpkg -S /bin/ls
+    coreutils: /bin/cp
+ 
+# removing a package
+sudo dpkg -r google-chrome-stable
+ 
+# purging a package
+sudo dpkg -P google-chrome-stable
+ 
+### APT ###
+# updating the package index (doesn't install/uninstall/update any package)
+sudo apt update
+# installing or updating a package named apache2
+sudo apt install apache2
+ 
+# listing all upgradable packages
+sudo apt list --upgradable
+ 
+# upgrading all applications
+sudo apt full-upgrade
+sudo apt full-upgrade -y        # => assume yes to any prompt (useful in scripts)
+ 
+# removing a package
+sudo apt remove apache2
+ 
+# removing a package and its configurations
+sudo apt purge apache2
+ 
+# removing dependencies that are not needed anymore
+sudo apt autoremove
+ 
+# removing the saved deb files from the cache directory (var/cache/apt/archives)
+sudo apt clean
+ 
+# listing all available packages
+sudo apt list
+sudo apt list | wc -l
+ 
+# searching for a package
+sudo apt list | grep nginx
+ 
+# showing information about a package
+sudo apt show nginx
+ 
+# listing all installed packages
+sudo apt list --installed
+
+The advantages and disadvantages of source compilation are as follows:
+
+Advantages
+
+You can compile applications with certain options which may be 
+missing or disabled in the standard distribution package.
+
+Access to the latest version of an application
+
+Its possible to have multiple versions of the same program installed
+
+Disadvantages
+
+The package manager will be completely unaware of the changes you've made. It won't
+be possible to update or remove the application using the package manager.
+
+If you are not careful when compiling to install the program in seperate location you can break
+your system.
+
+It's not the easiest job
+
+Source Compilation Guide
+
+1) Install the prerequisites: gcc, g++, make
+    Ubuntu: sudo apt update && sudo apt install build-essential
+    CentOS: sudo dnf group install "Development Tools"
+2) Download the source files from the official website.
+3) Check the integrity of the tarball(hash or digital signature)
+4) Extract the archive and move into the resulting directory
+5) Run: ./configure --help and set the required compilation options
+6) Run: make
+7) Run: make install
+
+One of the most world famous FTP servers is the proFTPD server. 
+
+crontab -l
+To list all crontabs for the current user
+
+crontab -e
+To edit the crontab for the current user
+
+@yearly /root/happy_new_year
+@monthly /root/task.sh
+@weekly /root/task.sh
+@daily /path_to_script.sh
+@hourly /path_to_script.sh
+@reboot /root/firewall.sh
+
+To view if the cronjob actually did what it was supposed to do, we can write
+tail -f /var/log/syslog
+
+##########################
+## Task Scheduling using Cron
+##########################
+ 
+# editing the current user’s crontab file 
+crontab -e
+ 
+# listing the current user’s crontab file 
+crontab -l
+ 
+# removing the current user’s crontab file 
+crontab -r
+ 
+## COMMON EXAMPLES ##
+# run every minute
+* * * * * /path_to_task_to_run.sh
+ 
+# run every hour at minute 15
+15 * * * * /path_to_task_to_run.sh
+ 
+# run every day at 6:30 PM
+30 18 * * * /path_to_task_to_run.sh
+ 
+# run every Monday at 10:03 PM
+3 22 * * 1 /path_to_task_to_run.sh
+ 
+# run on the 1st of every Month at 6:10 AM
+10 6 1 * * /path_to_task_to_run.sh
+ 
+# run every hour at minute 1, 20 and 35
+1,20,35 * * * * /path_to_task_to_run.sh
+ 
+# run every two hour at minute 10
+10 */2 * * * /path_to_task_to_run.sh
+ 
+# run once a year on the 1st of January at midnight
+@yearly     /path_to_task_to_run.sh
+ 
+# run once a month at midnight on the first day of the month
+@monthly    /path_to_task_to_run.sh
+ 
+# run once a week at midnight on Sunday
+@weekly      /path_to_task_to_run.sh
+ 
+# once an hour at the beginning of the hour
+@hourly     /path_to_task_to_run.sh
+ 
+# run at boot time
+@reboot     /path_to_task_to_run.sh
+ 
+All scripts in following directories will run as root at that interval:
+/etc/cron.hourly
+/etc/cron.daily  
+/etc/cron.hourly  
+/etc/cron.monthly
+/etc/cron.weekly
+
+
 
 
 
